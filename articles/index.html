@@ -75,6 +75,13 @@
             content: '- ';
         }
 
+        pre {
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
         hr {
             color: #BBBBBB;
             margin-bottom: 20px;
@@ -84,15 +91,18 @@
 
         .content {
             padding: 30px 200px;
+            margin-bottom: 30px;
             font-size: 18px;
         }
         .main {
             width: 80%;
             float: left;
+            padding-bottom: 30px;
         }
         .infobar {
             width: 15%;
             float: right;
+            padding-bottom: 30px;
         }
 
         /*--- navigation bar ---*/
@@ -149,6 +159,30 @@
             min-width: 140px;
             padding: 15px;
             background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
         }
     </style>
 </head>
