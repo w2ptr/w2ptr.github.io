@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Docs: mididi.writer
+
+</title>
+    <!-- <link rel="shortcut icon" href="" /> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif', 'Segoe UI Emoji';
+        }
+
+        /*--- generic element styling ---*/
+
+        a {
+            color: #5544FF;
+        }
+        a:hover {
+            color: #6688AA;
+        }
+
+        h1 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 2rem;
+        }
+        h2 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 1.5rem;
+        }
+        h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 510;
+        }
+        h4 {
+            font-size: 1rem;
+        }
+        h1 > a, h2 > a, h3 > a, h4 > a {
+            color: black;
+            text-decoration: none;
+        }
+        h1 > a:hover, h2 > a:hover, h3 > a:hover, h4 > a:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::before {
+            content: '# ';
+        }
+
+        p {
+            padding: 8px 0;
+        }
+
+        strong {
+            font-weight: 510;
+        }
+
+        ul {
+            list-style: none;
+            padding: 6px 0 6px 10px;
+        }
+        ul > li {
+            padding: 2px 0;
+        }
+        ul > li::before {
+            content: '- ';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        td, th {
+            padding: 10px;
+        }
+
+        pre {
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
+        hr {
+            color: #BBBBBB;
+            margin-bottom: 20px;
+        }
+
+        /*--- actual content ---*/
+
+        .content {
+            padding: 30px 200px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .main {
+            width: 80%;
+            float: left;
+            padding-bottom: 30px;
+        }
+        .infobar {
+            width: 15%;
+            float: right;
+            padding-bottom: 30px;
+        }
+
+        /*--- documentation generation ---*/
+        .doc-member {
+            padding: 5px 0 5px 20px;
+            margin: 30px 0 0 0;
+            border-left: 2px solid #888888;
+        }
+
+        /*--- navigation bar ---*/
+
+        .nav-bar {
+            display: block;
+            background-color: #220022;
+            padding: 0 200px;
+            font-weight: bold;
+        }
+        .nav-bar > * > .expand-base {
+            /* add padding to the expands in the nav bar */
+            padding-left: 15px;
+            padding-right: 65px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .nav-bar a, .expand-base {
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-bar a:hover, .expand-base:hover {
+            color: #88BB88;
+        }
+
+        /*--- expand/dropdown ---*/
+
+        .expand {
+            display: inline-block;
+            position: relative;
+        }
+        .expand-base {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+        .expand-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            border: 3px solid #220022;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .expand:hover.down > .expand-list {
+            display: block;
+        }
+        .expand:hover.side > .expand-list {
+            display: inline-block;
+        }
+        .expand-list > * {
+            display: inline-block;
+            min-width: 140px;
+            padding: 15px;
+            background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <span id="nav-projects" class="expand down">
+            <a href="/projects" class="expand-base">
+                Projects
+            </a>
+            <div class="expand-list">
+                <a href="/projects/eqpad">Equation Notepad</a>
+                <a href="/projects/iunctio">Iunctio</a>
+            </div>
+        </span>
+
+        <span id="nav-docs" class="expand down">
+            <a href="/docs" class="expand-base">
+                Documentation
+            </a>
+            <div class="expand-list">
+                <a href=".">No Docs Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-articles" class="expand down">
+            <a href="/articles" class="expand-base">
+                Articles
+            </a>
+            <div class="expand-list">
+                <a href=".">No Articles Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-resources" class="expand down">
+            <a href="/resources" class="expand-base">
+                Resources
+            </a>
+            <div class="expand-list">
+                <a href=".">No Resources Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-links" class="expand down">
+            <a href="/links" class="expand-base">
+                Links
+            </a>
+            <div class="expand-list">
+                <a href="https://github.com/w2ptr">Github Profile</a>
+            </div>
+        </span>
+    </nav>
+
+    <div class="content">
+        <main class="main">
+                        <h1 id="mididi.writer"><a href="#mididi.writer">Module mididi.writer</a></h1>
+            <hr />
+
+            <p><p><code>mididi.writer</code> contains functions for encoding MIDI objects to raw bytes.</p>
+<p>Currently, the writer is compatible with the standard MIDI format 1.0 and
+forward compatible with newer formats (in which case newer features will be
+ignored, as the specification demands).</p>
+<p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Note:</strong>
+these functions do not always check if the provided data (i.e. the chunks
+and track events) is actually correct, but if the data comes from
+<code>MIDIReader</code> functions, it should always be complete and valid data</p>
+<p><strong>Authors:</strong>
+Wout Huynen</p>
+</p>
+
+            <h2 id="mididi.writer-members"><a href="#mididi.writer-members">Members</a></h2>
+
+            <table><tbody>
+            <tr>
+                <th>Name</th>
+                <th>Kind</th>
+                <th>Description</th>
+            </tr>
+                <tr>
+                <td><a href="#mididi.writer.DelegateSink"><code>DelegateSink</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeMIDIFile"><code>writeMIDIFile</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeMIDIFile"><code>writeMIDIFile</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeMIDI"><code>writeMIDI</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeHeaderChunk"><code>writeHeaderChunk</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeTrackChunk"><code>writeTrackChunk</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.writer.writeTrackEvent"><code>writeTrackEvent</code></a></td>
+                <td>template</td>
+                <td>description</td>
+                </tr>
+            </tbody></table>
+
+            <div class="doc-member">
+                <h3 id="mididi.writer.DelegateSink"><a href="#mididi.writer.DelegateSink">struct <code>DelegateSink</code></a></h3>
+            <p>A utility output range that outputs bytes to a delegate.</p>
+<div class="doc-member">
+                <h3 id="mididi.writer.DelegateSink.constructor-50967"><a href="#mididi.writer.DelegateSink.constructor-50967">constructor <code>this(void delegate(scope const(ubyte)[]) sink)</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.writer.DelegateSink.put"><a href="#mididi.writer.DelegateSink.put">method <code>void put(ubyte x)</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.writer.DelegateSink.putMultiple"><a href="#mididi.writer.DelegateSink.putMultiple">method <code>void putMultiple(const(ubyte[]) bytes)</code></a></h3>
+            </div></div><div class="doc-member">
+                        <h3 id="mididi.writer.writeMIDIFile"><a href="#mididi.writer.writeMIDIFile">function <code>void writeMIDIFile()(File file, const ref MIDI midi)</code></a></h3>
+                    
+                        <h3 id="mididi.writer.writeMIDIFile"><a href="#mididi.writer.writeMIDIFile">function <code>void writeMIDIFile()(string path, const ref MIDI midi)</code></a></h3>
+                    <p><code>writeMIDIFile</code> essentially does the same as <code>writeMIDI</code> to a range object that
+writes to a <code>std.stdio.File</code>, but it is given for convenience.</p>
+<p>There are two overloads, one for a <code>std.stdio.File</code> object and one for a path
+(which opens the file for you in write mode).</p>
+</div><div class="doc-member">
+                        <h3 id="mididi.writer.writeMIDI"><a href="#mididi.writer.writeMIDI">function <code>void writeMIDI(T)(ref T output, const ref MIDI midi)</code></a></h3>
+                    <p><code>writeMIDI</code> encodes a MIDI data object (<code>mididi.types.MIDI</code>) to binary data.</p>
+<p>The template parameter <code>T</code> must be an output range type defining the
+<code>put(ubyte)</code> method. In addition, it can define the
+<code>putMultiple(scope const ubyte[])</code> method if there is a more efficient method
+to put several bytes at once. (This info applies to all <code>write*</code> functions in
+this module.)</p>
+<p><strong>Params:</strong>
+T = the output range type
+midi = the MIDI object that is encoded into <code>output</code>
+output = the output range object</p>
+<p><strong>Example:</strong></p>
+<pre><code>import mididi.def : MetaEventType, SystemMessageType, TrackFormat;
+
+const(ubyte)[] result;
+auto sink = DelegateSink((scope const bytes) {
+    result ~= bytes;
+});
+auto midi = MIDI(
+    HeaderChunk(TrackFormat.single, 1, TimeDivision.fromFormat0(1000)),
+    [
+        TrackChunk([
+            TrackEvent(
+                0xFF,
+                MIDIEvent(cast(ubyte) SystemMessageType.songSelect, [123, 0]),
+            ),
+            TrackEvent(
+                0x0F,
+                MetaEvent(MetaEventType.endOfTrack, []),
+            ),
+        ]),
+    ]
+);
+sink.writeMIDI(midi);
+assert(result == cast(const(ubyte)[]) [
+    'M', 'T', 'h', 'd',
+    0, 0, 0, 6,
+    0, 0,
+    0, 1,
+    0x03, 0xE8,
+
+    'M', 'T', 'r', 'k',
+    0, 0, 0, 8,
+    0x81, 0x7F, cast(ubyte) SystemMessageType.songSelect, 123,
+    0x0F,       0xFF, cast(ubyte) MetaEventType.endOfTrack, 0x00,
+]);
+
+</code></pre>
+</div><div class="doc-member">
+                        <h3 id="mididi.writer.writeHeaderChunk"><a href="#mididi.writer.writeHeaderChunk">function <code>void writeHeaderChunk(T)(ref T output, const ref HeaderChunk chunk)</code></a></h3>
+                    <p><strong>Example:</strong>
+This test demonstrates header chunk writing.</p>
+<pre><code>import mididi.def : TrackFormat;
+
+auto chunk = HeaderChunk(
+    TrackFormat.sequential,
+    ushort.max,
+    TimeDivision.fromFormat1(-25, 64),
+);
+auto result = &quot;&quot;;
+auto range = DelegateSink((scope const bytes) {
+    result ~= bytes;
+});
+range.writeHeaderChunk(chunk);
+assert(result == [
+    'M', 'T', 'h', 'd', // chunk: header
+    0, 0, 0, 6, // length: 6
+    0, 2, // format: 2
+    0xFF, 0xFF, // nTracks: ushort.max
+    0b1_1100111, 64, // division: format 1; -25; 64
+]);
+
+</code></pre>
+</div><div class="doc-member">
+                        <h3 id="mididi.writer.writeTrackChunk"><a href="#mididi.writer.writeTrackChunk">function <code>void writeTrackChunk(T)(ref T output, const ref TrackChunk chunk)</code></a></h3>
+                    <p><code>writeTrackChunk</code> encodes a track chunk to bytes and <code>put</code>s them into <code>output</code>.</p>
+<p>This is guaranteed to use &quot;running status&quot; to encode consecutive track events
+with the same status byte.</p>
+<p><strong>Params:</strong>
+output = the output range object
+chunk = the track chunk to be encoded</p>
+<p><strong>Example:</strong>
+This test demonstrates track chunk writing</p>
+<pre><code>import mididi.def : MetaEventType;
+
+const(ubyte)[] result = [];
+auto range = DelegateSink((scope const bytes) {
+    result ~= bytes;
+});
+auto chunk = TrackChunk([
+    TrackEvent(
+        100, // delta time
+        // 0x93 = note on
+        MIDIEvent(0x93, [0x4C, 0x20]),
+    ),
+    TrackEvent(
+        300,
+        // 0x93 = note on (same status)
+        MIDIEvent(0x93, [0x4C, 0x00]),
+    ),
+    TrackEvent(
+        400,
+        MetaEvent(MetaEventType.endOfTrack, []),
+    ),
+]);
+range.writeTrackChunk(chunk);
+assert(result == [
+    'M', 'T', 'r', 'k',
+    0, 0, 0, 13,
+    0x64,       0x93, 0x4C, 0x20,
+    0x82, 0x2C,       0x4C, 0x00, // running status
+    0x83, 0x10, 0xFF, 0x2F, 0x00,
+]);
+
+</code></pre>
+</div><div class="doc-member">
+                        <h3 id="mididi.writer.writeTrackEvent"><a href="#mididi.writer.writeTrackEvent">function <code>void writeTrackEvent(T)(ref T output, const ref TrackEvent event, ubyte runningStatus)</code></a></h3>
+                    <p><code>writeTrackEvent</code> encodes a single track event to binary data and <code>put</code>s it
+into <code>output</code>.</p>
+<p>If you want to encode using running status (meaning it leaves out the status
+byte if this event's status byte is the same as the previous one), set
+<code>runningStatus</code> to the previous event's status byte. Otherwise, set it to 0.</p>
+<p><strong>Params:</strong>
+output = the output range to send the bytes to
+event = the track event that is encoded to bytes
+runningStatus = the previous event's status byte; set to <code>0</code> if you don't
+care about saving space using running status</p>
+</div>
+
+            <h2 id="mididi.writer-source"><a href="#mididi.writer-source">Source</a></h2>
+            <p><a href="https://github.com/w2ptr/midi-di">Click here to view the source of this module.</a></p>
+        
+
+        </main>
+
+        <aside class="infobar">
+            
+
+
+        </aside>
+    </div>
+
+    <script lang="javascript">
+        console.log("javascript");
+    </script>
+</body>
+</html>

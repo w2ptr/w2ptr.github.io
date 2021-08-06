@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Docs: mididi.types
+
+</title>
+    <!-- <link rel="shortcut icon" href="" /> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif', 'Segoe UI Emoji';
+        }
+
+        /*--- generic element styling ---*/
+
+        a {
+            color: #5544FF;
+        }
+        a:hover {
+            color: #6688AA;
+        }
+
+        h1 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 2rem;
+        }
+        h2 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 1.5rem;
+        }
+        h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 510;
+        }
+        h4 {
+            font-size: 1rem;
+        }
+        h1 > a, h2 > a, h3 > a, h4 > a {
+            color: black;
+            text-decoration: none;
+        }
+        h1 > a:hover, h2 > a:hover, h3 > a:hover, h4 > a:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::before {
+            content: '# ';
+        }
+
+        p {
+            padding: 8px 0;
+        }
+
+        strong {
+            font-weight: 510;
+        }
+
+        ul {
+            list-style: none;
+            padding: 6px 0 6px 10px;
+        }
+        ul > li {
+            padding: 2px 0;
+        }
+        ul > li::before {
+            content: '- ';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        td, th {
+            padding: 10px;
+        }
+
+        pre {
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
+        hr {
+            color: #BBBBBB;
+            margin-bottom: 20px;
+        }
+
+        /*--- actual content ---*/
+
+        .content {
+            padding: 30px 200px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .main {
+            width: 80%;
+            float: left;
+            padding-bottom: 30px;
+        }
+        .infobar {
+            width: 15%;
+            float: right;
+            padding-bottom: 30px;
+        }
+
+        /*--- documentation generation ---*/
+        .doc-member {
+            padding: 5px 0 5px 20px;
+            margin: 30px 0 0 0;
+            border-left: 2px solid #888888;
+        }
+
+        /*--- navigation bar ---*/
+
+        .nav-bar {
+            display: block;
+            background-color: #220022;
+            padding: 0 200px;
+            font-weight: bold;
+        }
+        .nav-bar > * > .expand-base {
+            /* add padding to the expands in the nav bar */
+            padding-left: 15px;
+            padding-right: 65px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .nav-bar a, .expand-base {
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-bar a:hover, .expand-base:hover {
+            color: #88BB88;
+        }
+
+        /*--- expand/dropdown ---*/
+
+        .expand {
+            display: inline-block;
+            position: relative;
+        }
+        .expand-base {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+        .expand-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            border: 3px solid #220022;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .expand:hover.down > .expand-list {
+            display: block;
+        }
+        .expand:hover.side > .expand-list {
+            display: inline-block;
+        }
+        .expand-list > * {
+            display: inline-block;
+            min-width: 140px;
+            padding: 15px;
+            background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <span id="nav-projects" class="expand down">
+            <a href="/projects" class="expand-base">
+                Projects
+            </a>
+            <div class="expand-list">
+                <a href="/projects/eqpad">Equation Notepad</a>
+                <a href="/projects/iunctio">Iunctio</a>
+            </div>
+        </span>
+
+        <span id="nav-docs" class="expand down">
+            <a href="/docs" class="expand-base">
+                Documentation
+            </a>
+            <div class="expand-list">
+                <a href=".">No Docs Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-articles" class="expand down">
+            <a href="/articles" class="expand-base">
+                Articles
+            </a>
+            <div class="expand-list">
+                <a href=".">No Articles Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-resources" class="expand down">
+            <a href="/resources" class="expand-base">
+                Resources
+            </a>
+            <div class="expand-list">
+                <a href=".">No Resources Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-links" class="expand down">
+            <a href="/links" class="expand-base">
+                Links
+            </a>
+            <div class="expand-list">
+                <a href="https://github.com/w2ptr">Github Profile</a>
+            </div>
+        </span>
+    </nav>
+
+    <div class="content">
+        <main class="main">
+                        <h1 id="mididi.types"><a href="#mididi.types">Module mididi.types</a></h1>
+            <hr />
+
+            <p><p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Authors:</strong>
+Wout Huynen</p>
+</p>
+
+            <h2 id="mididi.types-members"><a href="#mididi.types-members">Members</a></h2>
+
+            <table><tbody>
+            <tr>
+                <th>Name</th>
+                <th>Kind</th>
+                <th>Description</th>
+            </tr>
+                <tr>
+                <td><a href="#mididi.types.MIDI"><code>MIDI</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.Chunk"><code>Chunk</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.HeaderChunk"><code>HeaderChunk</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.TimeDivision"><code>TimeDivision</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.TrackChunk"><code>TrackChunk</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.TrackEvent"><code>TrackEvent</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.MIDIEvent"><code>MIDIEvent</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.SysExEvent"><code>SysExEvent</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.types.MetaEvent"><code>MetaEvent</code></a></td>
+                <td>struct</td>
+                <td>description</td>
+                </tr>
+            </tbody></table>
+
+            <div class="doc-member">
+                <h3 id="mididi.types.MIDI"><a href="#mididi.types.MIDI">struct <code>MIDI</code></a></h3>
+            <p><code>MIDI</code> represents the data of a complete MIDI file.</p>
+<div class="doc-member">
+                <h3 id="mididi.types.MIDI.headerChunk"><a href="#mididi.types.MIDI.headerChunk">member variable <code>mididi.types.HeaderChunk headerChunk</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.MIDI.trackChunks"><a href="#mididi.types.MIDI.trackChunks">member variable <code>mididi.types.TrackChunk[] trackChunks</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.types.Chunk"><a href="#mididi.types.Chunk">struct <code>Chunk</code></a></h3>
+            <p>A more general chunk type, which is essentially a tagged union of <code>HeaderChunk</code>
+and <code>TrackChunk</code>.</p>
+<p>Use <code>asHeaderChunk()</code> or <code>asTrackChunk()</code> to find out which one this is.</p>
+<div class="doc-member">
+                <h3 id="mididi.types.Chunk.constructor-843"><a href="#mididi.types.Chunk.constructor-843">constructor <code>this(mididi.types.HeaderChunk chunk)</code></a></h3>
+            
+                <h3 id="mididi.types.Chunk.constructor-50267"><a href="#mididi.types.Chunk.constructor-50267">constructor <code>this(mididi.types.TrackChunk chunk)</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.Chunk.asHeaderChunk"><a href="#mididi.types.Chunk.asHeaderChunk">method <code>inout(mididi.types.HeaderChunk)* asHeaderChunk()</code></a></h3>
+            <p><strong>Returns:</strong>
+a pointer to the header chunk or <code>null</code> if this chunk is not a header
+chunk</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.Chunk.asTrackChunk"><a href="#mididi.types.Chunk.asTrackChunk">method <code>inout(mididi.types.TrackChunk)* asTrackChunk()</code></a></h3>
+            <p><strong>Returns:</strong>
+a pointer to the track chunk or <code>null</code> if this chunk is not a track
+chunk</p>
+</div></div><div class="doc-member">
+                <h3 id="mididi.types.HeaderChunk"><a href="#mididi.types.HeaderChunk">struct <code>HeaderChunk</code></a></h3>
+            <p><code>HeaderChunk</code> is the first chunk in a MIDI file. It gives information about the
+format of the other chunks.</p>
+<div class="doc-member">
+                <h3 id="mididi.types.HeaderChunk.trackFormat"><a href="#mididi.types.HeaderChunk.trackFormat">member variable <code>mididi.def.TrackFormat trackFormat</code></a></h3>
+            <p>The track format (the possible values are given in the enum
+<code>mididi.def.TrackFormat</code>).</p>
+<p>Cast this to <code>ushort</code> to get the raw value, which should be either 0, 1 or
+2.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.HeaderChunk.nTracks"><a href="#mididi.types.HeaderChunk.nTracks">member variable <code>ushort nTracks</code></a></h3>
+            <p>The number of tracks in the data.</p>
+<p><code>nTracks</code> should always be 1 for if <code>trackFormat</code> is <code>TrackFormat.single</code>.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.HeaderChunk.division"><a href="#mididi.types.HeaderChunk.division">member variable <code>mididi.types.TimeDivision division</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision"><a href="#mididi.types.TimeDivision">struct <code>TimeDivision</code></a></h3>
+            <div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.fromRawValue"><a href="#mididi.types.TimeDivision.fromRawValue">method <code>mididi.types.TimeDivision fromRawValue(ushort rawValue)</code></a></h3>
+            <p><code>fromRawValue</code> creates a <code>TimeDivision</code> object from the raw encoding of
+this property in the header chunk.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.fromFormat0"><a href="#mididi.types.TimeDivision.fromFormat0">method <code>mididi.types.TimeDivision fromFormat0(ushort ticksPerQuarterNote)</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.fromFormat1"><a href="#mididi.types.TimeDivision.fromFormat1">method <code>mididi.types.TimeDivision fromFormat1(byte negativeSMPTEFormat, ubyte ticksPerFrame)</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.rawValue"><a href="#mididi.types.TimeDivision.rawValue">property <code>ushort rawValue()</code></a></h3>
+            <p>(read-only)</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.getFormat"><a href="#mididi.types.TimeDivision.getFormat">method <code>int getFormat()</code></a></h3>
+            <p>Returns the time division's format. If the format is <code>0</code>, then use
+<code>getTicksPerQuarterNote()</code>. If it is <code>1</code>, use <code>getNegativeSMPTEFormat()</code>
+and <code>getTicksPerFrame()</code>.</p>
+<p><strong>Returns:</strong>
+<code>0</code> if the division's format is how many ticks make up a quarter note
+(bit 15 is 0) or <code>1</code> if it is ticks-per-frame (bit 15 is 1)</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.getTicksPerQuarterNote"><a href="#mididi.types.TimeDivision.getTicksPerQuarterNote">method <code>ushort getTicksPerQuarterNote()</code></a></h3>
+            <p>Preconditions:
+<code>getFormat()</code> must be <code>0</code></p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.getNegativeSMPTEFormat"><a href="#mididi.types.TimeDivision.getNegativeSMPTEFormat">method <code>byte getNegativeSMPTEFormat()</code></a></h3>
+            <p><strong>Returns:</strong>
+one of the four standard SMPTE formats (-24, -25, -29, -30),
+representing the negative of the number of frames/second
+Preconditions:
+<code>getFormat()</code> must be <code>1</code></p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TimeDivision.getTicksPerFrame"><a href="#mididi.types.TimeDivision.getTicksPerFrame">method <code>ubyte getTicksPerFrame()</code></a></h3>
+            <p><strong>Returns:</strong>
+the number of ticks per frame
+Preconditions:
+<code>getFormat()</code> must be <code>1</code></p>
+</div></div><div class="doc-member">
+                <h3 id="mididi.types.TrackChunk"><a href="#mididi.types.TrackChunk">struct <code>TrackChunk</code></a></h3>
+            <p>A track chunk is a chunk that stores the actual data. It contains a number of
+track events.</p>
+<div class="doc-member">
+                <h3 id="mididi.types.TrackChunk.events"><a href="#mididi.types.TrackChunk.events">member variable <code>mididi.types.TrackEvent[] events</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.types.TrackEvent"><a href="#mididi.types.TrackEvent">struct <code>TrackEvent</code></a></h3>
+            <p>A <code>TrackEvent</code> is a delta time coupled with either a MIDI event, a system
+exclusive event or a meta event.</p>
+<p><code>TrackEvent</code> has an underlying union that uses the status byte to discriminate
+(which cannot be changed after construction). Use <code>asMIDIEvent()</code>,
+<code>asSysExEvent()</code> or <code>asMetaEvent()</code> to access the underlying values from the
+union.</p>
+<p>See the documentation of <code>mididi.def.isMIDIEvent()</code> to see what each type of
+message means. <strong>Note:</strong> system exclusive events ARE also semantically system
+common messages. The confusing thing is that all other system common messages
+are syntactically MIDI events, but system exclusive events are not MIDI events.</p>
+<p><strong>Example:</strong>
+Here is an example of how to use <code>TrackEvent</code>.</p>
+<pre><code>auto statusByte = cast(ubyte) ((ChannelMessageType.noteOn &lt;&lt; 4) | 0x7);
+auto event = TrackEvent(
+    200,
+    MIDIEvent(statusByte, [0x0F, 0x00]),
+);
+
+// get underlying value
+assert(event.asSysExEvent() is null);
+assert(event.asMetaEvent() is null);
+const message = event.asMIDIEvent();
+assert(message !is null);
+
+// MIDI event = either a channel message or a system message
+assert(message.isChannelMessage());
+assert(!message.isSystemMessage());
+
+// since it's a channel message, we can use these properties of the
+// `MIDIEvent` struct:
+assert(message.getChannelMessageType() == ChannelMessageType.noteOn);
+assert(message.getChannelNumber() == 0x7);
+assert(message.data == [0x0F, 0x00]);
+
+</code></pre>
+<div class="doc-member">
+                <h3 id="mididi.types.TrackEvent.constructor-27968"><a href="#mididi.types.TrackEvent.constructor-27968">constructor <code>this(int deltaTime, mididi.types.MIDIEvent event)</code></a></h3>
+            
+                <h3 id="mididi.types.TrackEvent.constructor-16932"><a href="#mididi.types.TrackEvent.constructor-16932">constructor <code>this(int deltaTime, mididi.types.SysExEvent event)</code></a></h3>
+            
+                <h3 id="mididi.types.TrackEvent.constructor-43174"><a href="#mididi.types.TrackEvent.constructor-43174">constructor <code>this(int deltaTime, mididi.types.MetaEvent event)</code></a></h3>
+            <p>These constructors initialize the object with a delta time and an event.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TrackEvent.deltaTime"><a href="#mididi.types.TrackEvent.deltaTime">member variable <code>int deltaTime</code></a></h3>
+            <p><code>deltaTime</code> is the time between the previous event and this event.</p>
+<p>Its meaning depends on the time division in the header chunk.</p>
+<p>If the header chunk of the <code>MIDI</code> has a division format of 0, then this
+delta time represents a fraction of a beat (a beat that has length
+<code>getTicksPerQuarterNote()</code>); if the format is 1, then this is a fraction of
+a second. TODO: I don't get it myself; research SMPTE format and MIDI time code!!!!!</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TrackEvent.statusByte"><a href="#mididi.types.TrackEvent.statusByte">property <code>ubyte statusByte()</code></a></h3>
+            <p><strong>Returns:</strong>
+this event's status byte (see <code>TrackEvent</code>'s' documentation)
+<strong>Note:</strong>
+this property cannot be changed after construction</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TrackEvent.asMIDIEvent"><a href="#mididi.types.TrackEvent.asMIDIEvent">method <code>inout(mididi.types.MIDIEvent)* asMIDIEvent()</code></a></h3>
+            
+                <h3 id="mididi.types.TrackEvent.asSysExEvent"><a href="#mididi.types.TrackEvent.asSysExEvent">method <code>inout(mididi.types.SysExEvent)* asSysExEvent()</code></a></h3>
+            
+                <h3 id="mididi.types.TrackEvent.asMetaEvent"><a href="#mididi.types.TrackEvent.asMetaEvent">method <code>inout(mididi.types.MetaEvent)* asMetaEvent()</code></a></h3>
+            <p><strong>Returns:</strong>
+a pointer to the underlying <code>MIDIEvent</code>, <code>SysExEvent</code> or <code>MetaEvent</code>
+if the object is of that variety; <code>null</code> otherwise</p>
+<p><strong>Note:</strong>
+do not reassign the <code>TrackEvent</code> object while still having a reference
+to the object in the union.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.TrackEvent.opEquals"><a href="#mididi.types.TrackEvent.opEquals">method <code>bool opEquals(ref const(mididi.types.TrackEvent) rhs)</code></a></h3>
+            
+                <h3 id="mididi.types.TrackEvent.toHash"><a href="#mididi.types.TrackEvent.toHash">method <code>ulong toHash()</code></a></h3>
+            <p>Equality and hash methods.</p>
+</div></div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent"><a href="#mididi.types.MIDIEvent">struct <code>MIDIEvent</code></a></h3>
+            <p>A MIDI event is any normal channel message or system message (except for system
+exclusive events).</p>
+<p><strong>See also:</strong>
+<code>mididi.def.isMIDIEvent</code></p>
+<div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.statusByte"><a href="#mididi.types.MIDIEvent.statusByte">member variable <code>ubyte statusByte</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.data"><a href="#mididi.types.MIDIEvent.data">member variable <code>ubyte[2] data</code></a></h3>
+            <p>The data bytes in this message.</p>
+<p>The first bit of both bytes must be 0 and if the message type only needs
+one byte, the second byte should be <code>0x00</code>.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.isChannelMessage"><a href="#mididi.types.MIDIEvent.isChannelMessage">method <code>bool isChannelMessage()</code></a></h3>
+            
+                <h3 id="mididi.types.MIDIEvent.isSystemMessage"><a href="#mididi.types.MIDIEvent.isSystemMessage">method <code>bool isSystemMessage()</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.getChannelMessageType"><a href="#mididi.types.MIDIEvent.getChannelMessageType">method <code>mididi.def.ChannelMessageType getChannelMessageType()</code></a></h3>
+            
+                <h3 id="mididi.types.MIDIEvent.getChannelNumber"><a href="#mididi.types.MIDIEvent.getChannelNumber">method <code>ubyte getChannelNumber()</code></a></h3>
+            <p>These methods give the channel message type and the channel number (upper
+and lower four bits, respectively).</p>
+<p>Preconditions:
+this message must be a channel message, so <code>this.isChannelMessage()</code>
+must be true.
+<strong>See also:</strong>
+<code>mididi.def.ChannelMessageType</code></p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.getSystemMessageType"><a href="#mididi.types.MIDIEvent.getSystemMessageType">method <code>mididi.def.SystemMessageType getSystemMessageType()</code></a></h3>
+            <p>Preconditions:
+this message must be a system message, so <code>this.isSystemMessage()</code> must
+be true.
+<strong>See also:</strong>
+<code>mididi.def.SystemMessageType</code></p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.MIDIEvent.opEquals"><a href="#mididi.types.MIDIEvent.opEquals">method <code>bool opEquals(ref const(mididi.types.MIDIEvent) rhs)</code></a></h3>
+            
+                <h3 id="mididi.types.MIDIEvent.toHash"><a href="#mididi.types.MIDIEvent.toHash">method <code>ulong toHash()</code></a></h3>
+            <p>Equality and hash methods.</p>
+</div></div><div class="doc-member">
+                <h3 id="mididi.types.SysExEvent"><a href="#mididi.types.SysExEvent">struct <code>SysExEvent</code></a></h3>
+            <p>A system exclusive event is one unit (&quot;packet&quot;) of a system exclusive message,
+which can be used as an escape to emit any arbitrary bytes.</p>
+<p><strong>See also:</strong>
+<code>mididi.def.isSysExEvent</code></p>
+<div class="doc-member">
+                <h3 id="mididi.types.SysExEvent.type"><a href="#mididi.types.SysExEvent.type">member variable <code>mididi.def.SystemMessageType type</code></a></h3>
+            <p>The kind of system exclusive event. This can be either <code>systemExclusive</code>
+(<code>0xF0</code>) or <code>endOfExclusive</code> (<code>0xF7</code>).</p>
+</div><div class="doc-member">
+                <h3 id="mididi.types.SysExEvent.data"><a href="#mididi.types.SysExEvent.data">member variable <code>ubyte[] data</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.types.MetaEvent"><a href="#mididi.types.MetaEvent">struct <code>MetaEvent</code></a></h3>
+            <p>A meta event is an event that is not regular MIDI message, used to send meta
+information. Not every meta event has to be supported or acted upon.</p>
+<p>See Also:
+<code>mididi.def.isMetaEvent</code>; <code>mididi.def.MetaEventType</code></p>
+<div class="doc-member">
+                <h3 id="mididi.types.MetaEvent.type"><a href="#mididi.types.MetaEvent.type">member variable <code>mididi.def.MetaEventType type</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.types.MetaEvent.data"><a href="#mididi.types.MetaEvent.data">member variable <code>ubyte[] data</code></a></h3>
+            </div></div>
+
+            <h2 id="mididi.types-source"><a href="#mididi.types-source">Source</a></h2>
+            <p><a href="https://github.com/w2ptr/midi-di">Click here to view the source of this module.</a></p>
+        
+
+        </main>
+
+        <aside class="infobar">
+            
+
+
+        </aside>
+    </div>
+
+    <script lang="javascript">
+        console.log("javascript");
+    </script>
+</body>
+</html>

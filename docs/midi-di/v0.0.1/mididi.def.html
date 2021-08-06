@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Docs: mididi.def
+
+</title>
+    <!-- <link rel="shortcut icon" href="" /> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif', 'Segoe UI Emoji';
+        }
+
+        /*--- generic element styling ---*/
+
+        a {
+            color: #5544FF;
+        }
+        a:hover {
+            color: #6688AA;
+        }
+
+        h1 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 2rem;
+        }
+        h2 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 1.5rem;
+        }
+        h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 510;
+        }
+        h4 {
+            font-size: 1rem;
+        }
+        h1 > a, h2 > a, h3 > a, h4 > a {
+            color: black;
+            text-decoration: none;
+        }
+        h1 > a:hover, h2 > a:hover, h3 > a:hover, h4 > a:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::before {
+            content: '# ';
+        }
+
+        p {
+            padding: 8px 0;
+        }
+
+        strong {
+            font-weight: 510;
+        }
+
+        ul {
+            list-style: none;
+            padding: 6px 0 6px 10px;
+        }
+        ul > li {
+            padding: 2px 0;
+        }
+        ul > li::before {
+            content: '- ';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        td, th {
+            padding: 10px;
+        }
+
+        pre {
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
+        hr {
+            color: #BBBBBB;
+            margin-bottom: 20px;
+        }
+
+        /*--- actual content ---*/
+
+        .content {
+            padding: 30px 200px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .main {
+            width: 80%;
+            float: left;
+            padding-bottom: 30px;
+        }
+        .infobar {
+            width: 15%;
+            float: right;
+            padding-bottom: 30px;
+        }
+
+        /*--- documentation generation ---*/
+        .doc-member {
+            padding: 5px 0 5px 20px;
+            margin: 30px 0 0 0;
+            border-left: 2px solid #888888;
+        }
+
+        /*--- navigation bar ---*/
+
+        .nav-bar {
+            display: block;
+            background-color: #220022;
+            padding: 0 200px;
+            font-weight: bold;
+        }
+        .nav-bar > * > .expand-base {
+            /* add padding to the expands in the nav bar */
+            padding-left: 15px;
+            padding-right: 65px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .nav-bar a, .expand-base {
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-bar a:hover, .expand-base:hover {
+            color: #88BB88;
+        }
+
+        /*--- expand/dropdown ---*/
+
+        .expand {
+            display: inline-block;
+            position: relative;
+        }
+        .expand-base {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+        .expand-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            border: 3px solid #220022;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .expand:hover.down > .expand-list {
+            display: block;
+        }
+        .expand:hover.side > .expand-list {
+            display: inline-block;
+        }
+        .expand-list > * {
+            display: inline-block;
+            min-width: 140px;
+            padding: 15px;
+            background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <span id="nav-projects" class="expand down">
+            <a href="/projects" class="expand-base">
+                Projects
+            </a>
+            <div class="expand-list">
+                <a href="/projects/eqpad">Equation Notepad</a>
+                <a href="/projects/iunctio">Iunctio</a>
+            </div>
+        </span>
+
+        <span id="nav-docs" class="expand down">
+            <a href="/docs" class="expand-base">
+                Documentation
+            </a>
+            <div class="expand-list">
+                <a href=".">No Docs Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-articles" class="expand down">
+            <a href="/articles" class="expand-base">
+                Articles
+            </a>
+            <div class="expand-list">
+                <a href=".">No Articles Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-resources" class="expand down">
+            <a href="/resources" class="expand-base">
+                Resources
+            </a>
+            <div class="expand-list">
+                <a href=".">No Resources Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-links" class="expand down">
+            <a href="/links" class="expand-base">
+                Links
+            </a>
+            <div class="expand-list">
+                <a href="https://github.com/w2ptr">Github Profile</a>
+            </div>
+        </span>
+    </nav>
+
+    <div class="content">
+        <main class="main">
+                        <h1 id="mididi.def"><a href="#mididi.def">Module mididi.def</a></h1>
+            <hr />
+
+            <p><p><code>mididi.def</code> contains definition enums and types important to MIDI files.</p>
+<p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Authors:</strong>
+Wout Huynen</p>
+</p>
+
+            <h2 id="mididi.def-members"><a href="#mididi.def-members">Members</a></h2>
+
+            <table><tbody>
+            <tr>
+                <th>Name</th>
+                <th>Kind</th>
+                <th>Description</th>
+            </tr>
+                <tr>
+                <td><a href="#mididi.def.TrackFormat"><code>TrackFormat</code></a></td>
+                <td>enum</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isMIDIEvent"><code>isMIDIEvent</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSysExEvent"><code>isSysExEvent</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isMetaEvent"><code>isMetaEvent</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isChannelMessage"><code>isChannelMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSystemMessage"><code>isSystemMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.getDataLength"><code>getDataLength</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.ChannelMessageType"><code>ChannelMessageType</code></a></td>
+                <td>enum</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isChannelVoiceMessage"><code>isChannelVoiceMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isChannelModeMessage"><code>isChannelModeMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.SystemMessageType"><code>SystemMessageType</code></a></td>
+                <td>enum</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSystemCommonMessage"><code>isSystemCommonMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSystemCommonMessage"><code>isSystemCommonMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSystemRealTimeMessage"><code>isSystemRealTimeMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.isSystemRealTimeMessage"><code>isSystemRealTimeMessage</code></a></td>
+                <td>function</td>
+                <td>description</td>
+                </tr>
+            
+                <tr>
+                <td><a href="#mididi.def.MetaEventType"><code>MetaEventType</code></a></td>
+                <td>enum</td>
+                <td>description</td>
+                </tr>
+            </tbody></table>
+
+            <div class="doc-member">
+                <h3 id="mididi.def.TrackFormat"><a href="#mididi.def.TrackFormat">enum <code>TrackFormat</code></a></h3>
+            <p><code>TrackFormat</code> is the MIDI data's format.</p>
+<p>This format is given in the header chunk of a MIDI file.</p>
+<div class="doc-member">
+                <h3 id="mididi.def.TrackFormat.single"><a href="#mididi.def.TrackFormat.single"><code>single</code></a></h3>
+            <p>If the format is <code>single</code>, that means the MIDI data consists of a header
+chunk followed by a single track chunk.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.TrackFormat.simultaneous"><a href="#mididi.def.TrackFormat.simultaneous"><code>simultaneous</code></a></h3>
+            <p>If the format is <code>simultaneous</code>, that means the MIDI track data consists of
+multiple tracks, running in parallel.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.TrackFormat.sequential"><a href="#mididi.def.TrackFormat.sequential"><code>sequential</code></a></h3>
+            <p>If the format is <code>sequential</code>, that means the MIDI track data consists of
+multiple tracks, running sequentially.</p>
+</div></div><div class="doc-member">
+                <h3 id="mididi.def.isMIDIEvent"><a href="#mididi.def.isMIDIEvent">function <code>bool isMIDIEvent(ubyte statusByte)</code></a></h3>
+            
+                <h3 id="mididi.def.isSysExEvent"><a href="#mididi.def.isSysExEvent">function <code>bool isSysExEvent(ubyte statusByte)</code></a></h3>
+            
+                <h3 id="mididi.def.isMetaEvent"><a href="#mididi.def.isMetaEvent">function <code>bool isMetaEvent(ubyte statusByte)</code></a></h3>
+            <p>A track event is one of the following:</p>
+<ul>
+<li>a MIDI event, meaning it carries around any message (channel or system),
+except system exclusive messages;</li>
+<li>a system exclusive event, which offers an escape to transmit arbitrary bytes;</li>
+<li>a meta event, meaning it carries around other meta information.</li>
+</ul>
+<p>Use <code>isMIDIEvent()</code>, <code>isSysExEvent()</code> and <code>isMetaEvent()</code> to find which kind of
+event it is from its status byte.</p>
+<p><strong>See also:</strong>
+<code>mididi.types.TrackEvent</code>; <code>mididi.types.MIDIEvent</code>,
+<code>mididi.types.SysExEvent</code> and <code>mididi.types.MetaEvent</code>.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.isChannelMessage"><a href="#mididi.def.isChannelMessage">function <code>bool isChannelMessage(ubyte statusByte)</code></a></h3>
+            
+                <h3 id="mididi.def.isSystemMessage"><a href="#mididi.def.isSystemMessage">function <code>bool isSystemMessage(ubyte statusByte)</code></a></h3>
+            <p><code>isChannelMessage()</code> and <code>isSystemMessage()</code> are used to find if a MIDI event
+is a channel message or a system message.</p>
+<p>In turn, a channel message can be either a channel voice message or a channel
+mode message. A system message can be either a system common message or a
+system realtime message.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.getDataLength"><a href="#mididi.def.getDataLength">function <code>ulong getDataLength(ubyte statusByte)</code></a></h3>
+            <p><strong>Returns:</strong>
+how many data bytes should be read for the message with status byte
+<code>statusByte</code>
+Preconditions:
+<code>statusByte</code> must be from a MIDI event</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType"><a href="#mididi.def.ChannelMessageType">enum <code>ChannelMessageType</code></a></h3>
+            
+                <h3 id="mididi.def.isChannelVoiceMessage"><a href="#mididi.def.isChannelVoiceMessage">function <code>bool isChannelVoiceMessage(ubyte statusByte, ubyte[2] dataBytes)</code></a></h3>
+            
+                <h3 id="mididi.def.isChannelModeMessage"><a href="#mididi.def.isChannelModeMessage">function <code>bool isChannelModeMessage(ubyte statusByte, ubyte[2] dataBytes)</code></a></h3>
+            <p><code>ChannelMessageType</code> enumerates the possible types of channel messages.</p>
+<p>The underlying value of this enumeration is the four upper bits of the status
+byte (and always starts with a 1 bit). After all, a channel message has the
+message type in the four upper bits and a channel identifier in the four lower
+bits of the status byte.</p>
+<p>The functions <code>isChannelVoiceMessage()</code> and <code>isChannelModeMessage()</code> need the
+data bytes in addition to the status byte to identify if a channel message is a
+voice message or a mode message, because some status byte values overlap (see
+for example <code>ChannelMessageType.controlChangeOrMode</code>).</p>
+<p><strong>See also:</strong>
+<code>mididi.def.isChannelMessage</code></p>
+<div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.noteOff"><a href="#mididi.def.ChannelMessageType.noteOff"><code>noteOff</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.noteOn"><a href="#mididi.def.ChannelMessageType.noteOn"><code>noteOn</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.polyphonicKeyPressure"><a href="#mididi.def.ChannelMessageType.polyphonicKeyPressure"><code>polyphonicKeyPressure</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.controlChangeOrMode"><a href="#mididi.def.ChannelMessageType.controlChangeOrMode"><code>controlChangeOrMode</code></a></h3>
+            <p>NOTE: this kind of channel message can be either a Control Change message
+or a Channel Mode message, depending on the data bytes. Use
+<code>isChannelModeMessage()</code> to find out which it is.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.programChange"><a href="#mididi.def.ChannelMessageType.programChange"><code>programChange</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.channelPressure"><a href="#mididi.def.ChannelMessageType.channelPressure"><code>channelPressure</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.ChannelMessageType.pitchWheelChange"><a href="#mididi.def.ChannelMessageType.pitchWheelChange"><code>pitchWheelChange</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType"><a href="#mididi.def.SystemMessageType">enum <code>SystemMessageType</code></a></h3>
+            
+                <h3 id="mididi.def.isSystemCommonMessage"><a href="#mididi.def.isSystemCommonMessage">function <code>bool isSystemCommonMessage(mididi.def.SystemMessageType type)</code></a></h3>
+            
+                <h3 id="mididi.def.isSystemCommonMessage"><a href="#mididi.def.isSystemCommonMessage">function <code>bool isSystemCommonMessage(ubyte statusByte)</code></a></h3>
+            
+                <h3 id="mididi.def.isSystemRealTimeMessage"><a href="#mididi.def.isSystemRealTimeMessage">function <code>bool isSystemRealTimeMessage(mididi.def.SystemMessageType type)</code></a></h3>
+            
+                <h3 id="mididi.def.isSystemRealTimeMessage"><a href="#mididi.def.isSystemRealTimeMessage">function <code>bool isSystemRealTimeMessage(ubyte statusByte)</code></a></h3>
+            <p><code>SystemMessageType</code> enumerates the possible types of system message. Some of
+these are system common messages, others are system realtime messages.</p>
+<p>If for a <code>ubyte x</code> we have that <code>isSystemMessage(x)</code> is true, then it can be
+safely cast to <code>SystemMessageType</code> using <code>cast(SystemMessageType) x</code>.</p>
+<p>A system message is either a a &quot;system common message&quot; or a &quot;system real-time
+message&quot;. You can use <code>isSystemCommonMessage(x)</code> and
+<code>isSystemRealTimeMessage(x)</code> to identify which is true, or compare to the enum
+members to find out the exact message type.</p>
+<p><strong>See also:</strong>
+<code>mididi.def.isSystemMessage</code></p>
+<div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.systemExclusive"><a href="#mididi.def.SystemMessageType.systemExclusive"><code>systemExclusive</code></a></h3>
+            <p>This event can give any type of information specific to the manufacturer.</p>
+<p>A system exclusive message can consist of several packets, where each
+packet is placed in one event. Each event then starts with the byte <code>0xF7</code>,
+and the final event is also terminated by <code>0xF7</code>.</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.songPositionPointer"><a href="#mididi.def.SystemMessageType.songPositionPointer"><code>songPositionPointer</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.songSelect"><a href="#mididi.def.SystemMessageType.songSelect"><code>songSelect</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.tuneRequest"><a href="#mididi.def.SystemMessageType.tuneRequest"><code>tuneRequest</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.endOfExclusive"><a href="#mididi.def.SystemMessageType.endOfExclusive"><code>endOfExclusive</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.timingClock"><a href="#mididi.def.SystemMessageType.timingClock"><code>timingClock</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.start"><a href="#mididi.def.SystemMessageType.start"><code>start</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.continue_"><a href="#mididi.def.SystemMessageType.continue_"><code>continue_</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.stop"><a href="#mididi.def.SystemMessageType.stop"><code>stop</code></a></h3>
+            </div><div class="doc-member">
+                <h3 id="mididi.def.SystemMessageType.activeSensing"><a href="#mididi.def.SystemMessageType.activeSensing"><code>activeSensing</code></a></h3>
+            </div></div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType"><a href="#mididi.def.MetaEventType">enum <code>MetaEventType</code></a></h3>
+            <p><code>MetaEventType</code> enumerates the possible meta event types.</p>
+<p>Cast to <code>ubyte</code> to get the underlying value.</p>
+<p><strong>Note:</strong>
+do not use a value of this type in a <code>final switch</code>, because it might have
+a value that is not identified in this enum, since values can always be
+added later.
+<strong>See also:</strong>
+<code>mididi.def.isMetaEvent</code></p>
+<div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.sequenceNumber"><a href="#mididi.def.MetaEventType.sequenceNumber"><code>sequenceNumber</code></a></h3>
+            <p>0x00</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.text"><a href="#mididi.def.MetaEventType.text"><code>text</code></a></h3>
+            <p>0x01</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.copyright"><a href="#mididi.def.MetaEventType.copyright"><code>copyright</code></a></h3>
+            <p>0x02</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.sequenceName"><a href="#mididi.def.MetaEventType.sequenceName"><code>sequenceName</code></a></h3>
+            <p>0x03</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.instrumentName"><a href="#mididi.def.MetaEventType.instrumentName"><code>instrumentName</code></a></h3>
+            <p>0x04</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.lyric"><a href="#mididi.def.MetaEventType.lyric"><code>lyric</code></a></h3>
+            <p>0x05</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.marker"><a href="#mididi.def.MetaEventType.marker"><code>marker</code></a></h3>
+            <p>0x06</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.cuePoint"><a href="#mididi.def.MetaEventType.cuePoint"><code>cuePoint</code></a></h3>
+            <p>0x07</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.midiChannelPrefix"><a href="#mididi.def.MetaEventType.midiChannelPrefix"><code>midiChannelPrefix</code></a></h3>
+            <p>0x20</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.endOfTrack"><a href="#mididi.def.MetaEventType.endOfTrack"><code>endOfTrack</code></a></h3>
+            <p>0x2F</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.setTempo"><a href="#mididi.def.MetaEventType.setTempo"><code>setTempo</code></a></h3>
+            <p>0x51</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.smpteOffset"><a href="#mididi.def.MetaEventType.smpteOffset"><code>smpteOffset</code></a></h3>
+            <p>0x54</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.timeSignature"><a href="#mididi.def.MetaEventType.timeSignature"><code>timeSignature</code></a></h3>
+            <p>0x58</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.keySignature"><a href="#mididi.def.MetaEventType.keySignature"><code>keySignature</code></a></h3>
+            <p>0x59</p>
+</div><div class="doc-member">
+                <h3 id="mididi.def.MetaEventType.sequencerSpecific"><a href="#mididi.def.MetaEventType.sequencerSpecific"><code>sequencerSpecific</code></a></h3>
+            <p>0x7F</p>
+</div></div>
+
+            <h2 id="mididi.def-source"><a href="#mididi.def-source">Source</a></h2>
+            <p><a href="https://github.com/w2ptr/midi-di">Click here to view the source of this module.</a></p>
+        
+
+        </main>
+
+        <aside class="infobar">
+            
+
+
+        </aside>
+    </div>
+
+    <script lang="javascript">
+        console.log("javascript");
+    </script>
+</body>
+</html>
