@@ -465,10 +465,6 @@ assert(message.data == [0x0F, 0x00]);
                 <h3 id="mididi.types.TrackEvent.deltaTime"><a href="#mididi.types.TrackEvent.deltaTime">member variable <code>int deltaTime</code></a></h3>
             <p><code>deltaTime</code> is the time between the previous event and this event.</p>
 <p>Its meaning depends on the time division in the header chunk.</p>
-<p>If the header chunk of the <code>MIDI</code> has a division format of 0, then this
-delta time represents a fraction of a beat (a beat that has length
-<code>getTicksPerQuarterNote()</code>); if the format is 1, then this is a fraction of
-a second. TODO: I don't get it myself; research SMPTE format and MIDI time code!!!!!</p>
 </div><div class="doc-member">
                 <h3 id="mididi.types.TrackEvent.statusByte"><a href="#mididi.types.TrackEvent.statusByte">property <code>ubyte statusByte()</code></a></h3>
             <p><strong>Returns:</strong>
