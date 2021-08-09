@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Resources - w2ptr
+    <title>Docs: docs\midi-di\latest
 
 </title>
     <!-- <link rel="shortcut icon" href="" /> -->
@@ -258,16 +258,78 @@
 
     <div class="content">
         <main class="main">
-            <h1 id="resources"><a href="#resources">Resources</a></h1>
+            <h1 id="module-list"><a href="#module-list">Modules</a></h1>
 <hr />
 
-<p>No resources yet.</p>
+
+            <h2 id="submodule-mididi"><a href="#submodule-mididi">mididi</a></h2>
+
+            <p><a href="./mididi">[Link]</a></p>
+
+            <p><strong>Authors:</strong>
+<a href="https://github.com/w2ptr">https://github.com/w2ptr</a></p>
+
+        
+            <h2 id="submodule-mididi-def"><a href="#submodule-mididi-def">mididi.def</a></h2>
+
+            <p><a href="./mididi.def">[Link]</a></p>
+
+            <p><code>mididi.def</code> contains definition enums and types important to MIDI files.</p>
+<p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Authors:</strong>
+<a href="https://github.com/w2ptr">https://github.com/w2ptr</a></p>
+
+        
+            <h2 id="submodule-mididi-reader"><a href="#submodule-mididi-reader">mididi.reader</a></h2>
+
+            <p><a href="./mididi.reader">[Link]</a></p>
+
+            <p><code>mididi.reader</code> contains functions for reading the MIDI format.</p>
+<p>Currently, the reader is compatible with the standard MIDI format 1.0 and
+forward compatible with newer formats (in which case newer features will be
+ignored, as the specification demands).</p>
+<p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Authors:</strong>
+<a href="https://github.com/w2ptr">https://github.com/w2ptr</a></p>
+
+        
+            <h2 id="submodule-mididi-types"><a href="#submodule-mididi-types">mididi.types</a></h2>
+
+            <p><a href="./mididi.types">[Link]</a></p>
+
+            <p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Authors:</strong>
+<a href="https://github.com/w2ptr">https://github.com/w2ptr</a></p>
+
+        
+            <h2 id="submodule-mididi-writer"><a href="#submodule-mididi-writer">mididi.writer</a></h2>
+
+            <p><a href="./mididi.writer">[Link]</a></p>
+
+            <p><code>mididi.writer</code> contains functions for encoding MIDI objects to raw bytes.</p>
+<p>Currently, the writer is compatible with the standard MIDI format 1.0 and
+forward compatible with newer formats (in which case newer features will be
+ignored, as the specification demands).</p>
+<p>The implementation (and some of the documentation) is based on this specification:
+<a href="https://www.cs.cmu.edu/%7Emusic/cmsip/readings/Standard-MIDI-file-format-updated.pdf">https://www.cs.cmu.edu/~music/cmsip/readings/Standard-MIDI-file-format-updated.pdf</a></p>
+<p><strong>Note:</strong>
+these functions do not always check if the provided data (i.e. the chunks
+and track events) is actually correct, but if the data comes from
+<code>MIDIReader</code> functions, it should always be complete and valid data</p>
+<p><strong>Authors:</strong>
+<a href="https://github.com/w2ptr">https://github.com/w2ptr</a></p>
+
+        
 
 
         </main>
 
         <aside class="infobar">
             
+    
 
         </aside>
     </div>
