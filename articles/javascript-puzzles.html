@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Articles - w2ptr
+    <title>JavaScript Puzzles
 
 </title>
     <!-- <link rel="shortcut icon" href="" /> -->
@@ -266,10 +266,72 @@
 
     <div class="content">
         <main class="main">
-            <h1 id="articles"><a href="#articles">Articles</a></h1>
+            <h1 id="javascript-puzzles"><a href="#javascript-puzzles">JavaScript Puzzles</a></h1>
 <hr />
 
-<p>No articles yet.</p>
+<p>(introduction)</p>
+
+<h2 id="null-and-numbers"><a href="#null-and-numbers">Null and Numbers</a></h2>
+
+<p>Given these results:</p>
+
+<code><pre>
+> null == 0
+false
+> null === 0
+false
+> null > 0
+false
+</pre></code>
+
+<p>Why does <code>null >= 0</code> give <code>true</code> (even though >= is mathematically equivalent to "greater OR
+equal")?</p>
+
+<p>Solution and explanation:</p>
+
+<div class="collapse-text">
+    <p>When using an equality operator (e.g. "==" or "!=="), JavaScript compares by looking at the types and seeing if
+    they are the same (and in the case of "==", it
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality">tries a couple of
+    other conversions</a>).</p>
+
+    <p>However, comparison operators (e.g. "&gt;") only make sense for numbers, so it always tries to
+    convert both operands to a number first:</p>
+    
+<code><pre>
+null > 0    =>   Number(null) > Number(0)    =>   0 > 0    =>  false
+null >= 0   =>   Number(null) >= Number(0)   =>   0 >= 0   =>  true
+</pre></code>
+</div>
+
+<h2 id="adding-lists-and-objects"><a href="#adding-lists-and-objects">Adding Lists and Objects</a></h2>
+
+The following can be typed in a JavaScript console:
+
+<code><pre>
+> {} + {}
+NaN
+> {} + []
+0
+> [] + {}
+'[object Object]'
+> [] + []
+''
+</pre></code>
+
+However, if you assign the first two values to a variable, the results change:
+
+<code><pre>
+> const x = {} + [];
+> x
+'[object Object]'
+</pre></code>
+
+<h2 id="a-strange-operator"><a href="#a-strange-operator">A strange operator</a></h2>
+
+> const x = true +-+ ''
+> x
+1
 
 
         </main>

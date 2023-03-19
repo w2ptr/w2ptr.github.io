@@ -234,7 +234,14 @@
                 Articles
             </a>
             <div class="expand-list">
-                <a href=".">No Articles Yet</a>
+                <a href="/articles/installing-clangpp">Installing Clang++ on Windows (without VS!)</a>
+                <a href="/articles/javascript-puzzles">JavaScript Puzzles</a>
+                <span class="expand side">
+                    <a href="#">Git</a>
+                    <div class="expand-list">
+                        <a href="/articles/git/technical">Technical</a>
+                    </div>
+                </span>
             </div>
         </span>
 
@@ -427,7 +434,8 @@ exclusive event or a meta event.</p>
 <code>asSysExEvent()</code> or <code>asMetaEvent()</code> to access the underlying values from the
 union.</p>
 <p>See the documentation of <code>mididi.def.isMIDIEvent()</code> to see what each type of
-message means. <strong>Note:</strong> system exclusive events ARE also semantically system
+message means.
+<strong>Note:</strong> system exclusive events ARE also semantically system
 common messages. The confusing thing is that all other system common messages
 are syntactically MIDI events, but system exclusive events are not MIDI events.</p>
 <p><strong>Example:</strong>
@@ -466,11 +474,15 @@ assert(message.data == [0x0F, 0x00]);
                 <h3 id="mididi.types.TrackEvent.deltaTime"><a href="#mididi.types.TrackEvent.deltaTime">member variable <code>int deltaTime</code></a></h3>
             <p><code>deltaTime</code> is the time between the previous event and this event.</p>
 <p>Its meaning depends on the time division in the header chunk.</p>
+<p>If the header chunk of the <code>MIDI</code> has a division format of 0, then this
+delta time represents a fraction of a beat (a beat that has length
+<code>getTicksPerQuarterNote()</code>); if the format is 1, then this is a fraction of
+a second. TODO: I don't get it myself; research SMPTE format and MIDI time code!!!!!</p>
 </div><div class="doc-member">
                 <h3 id="mididi.types.TrackEvent.statusByte"><a href="#mididi.types.TrackEvent.statusByte">property <code>ubyte statusByte()</code></a></h3>
             <p><strong>Returns:</strong>
-this event's status byte (see <code>TrackEvent</code>'s' documentation)
-<strong>Note:</strong>
+this event's status byte (see <code>TrackEvent</code>'s' documentation)</p>
+<p><strong>Note:</strong>
 this property cannot be changed after construction</p>
 </div><div class="doc-member">
                 <h3 id="mididi.types.TrackEvent.asMIDIEvent"><a href="#mididi.types.TrackEvent.asMIDIEvent">method <code>inout(mididi.types.MIDIEvent)* asMIDIEvent()</code></a></h3>
@@ -514,15 +526,15 @@ one byte, the second byte should be <code>0x00</code>.</p>
 and lower four bits, respectively).</p>
 <p>Preconditions:
 this message must be a channel message, so <code>this.isChannelMessage()</code>
-must be true.
-<strong>See also:</strong>
+must be true.</p>
+<p><strong>See also:</strong>
 <code>mididi.def.ChannelMessageType</code></p>
 </div><div class="doc-member">
                 <h3 id="mididi.types.MIDIEvent.getSystemMessageType"><a href="#mididi.types.MIDIEvent.getSystemMessageType">method <code>mididi.def.SystemMessageType getSystemMessageType()</code></a></h3>
             <p>Preconditions:
 this message must be a system message, so <code>this.isSystemMessage()</code> must
-be true.
-<strong>See also:</strong>
+be true.</p>
+<p><strong>See also:</strong>
 <code>mididi.def.SystemMessageType</code></p>
 </div><div class="doc-member">
                 <h3 id="mididi.types.MIDIEvent.opEquals"><a href="#mididi.types.MIDIEvent.opEquals">method <code>bool opEquals(ref const(mididi.types.MIDIEvent) rhs)</code></a></h3>

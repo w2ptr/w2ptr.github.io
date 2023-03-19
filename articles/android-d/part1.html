@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>D for Android development - part 1: setup
+
+</title>
+    <!-- <link rel="shortcut icon" href="" /> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif', 'Segoe UI Emoji';
+        }
+
+        /*--- generic element styling ---*/
+
+        a {
+            color: #5544FF;
+        }
+        a:hover {
+            color: #6688AA;
+        }
+
+        h1 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 2rem;
+        }
+        h2 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 1.5rem;
+        }
+        h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 510;
+        }
+        h4 {
+            font-size: 1rem;
+        }
+        h1 > a, h2 > a, h3 > a, h4 > a {
+            color: black;
+            text-decoration: none;
+        }
+        h1 > a:hover, h2 > a:hover, h3 > a:hover, h4 > a:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::before {
+            content: '# ';
+        }
+
+        p {
+            padding: 8px 0;
+        }
+
+        strong {
+            font-weight: 510;
+        }
+
+        ul {
+            list-style: none;
+            padding: 6px 0 6px 10px;
+        }
+        ul > li {
+            padding: 2px 0;
+        }
+        ul > li::before {
+            content: '- ';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        td, th {
+            padding: 10px;
+        }
+
+        pre {
+            font-family: inherit;
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
+        hr {
+            color: #BBBBBB;
+            margin-bottom: 20px;
+        }
+
+        /*--- actual content ---*/
+
+        .content {
+            padding: 30px 200px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .main {
+            width: 80%;
+            float: left;
+            padding-bottom: 30px;
+        }
+        .infobar {
+            width: 15%;
+            float: right;
+            padding-bottom: 30px;
+        }
+
+        /*--- documentation generation ---*/
+        .doc-member {
+            padding: 5px 0 5px 20px;
+            margin: 30px 0 0 0;
+            border-left: 2px solid #888888;
+        }
+
+        /*--- navigation bar ---*/
+
+        .nav-bar {
+            display: block;
+            background-color: #220022;
+            padding: 0 200px;
+            font-weight: bold;
+        }
+        .nav-bar > * > .expand-base {
+            /* add padding to the expands in the nav bar */
+            padding-left: 15px;
+            padding-right: 65px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .nav-bar a, .expand-base {
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-bar a:hover, .expand-base:hover {
+            color: #88BB88;
+        }
+
+        /*--- expand/dropdown ---*/
+
+        .expand {
+            display: inline-block;
+            position: relative;
+        }
+        .expand-base {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+        .expand-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            border: 3px solid #220022;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .expand:hover.down > .expand-list {
+            display: block;
+        }
+        .expand:hover.side > .expand-list {
+            display: inline-block;
+        }
+        .expand-list > * {
+            display: inline-block;
+            min-width: 140px;
+            padding: 15px;
+            background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <span id="nav-projects" class="expand down">
+            <a href="/projects" class="expand-base">
+                Projects
+            </a>
+            <div class="expand-list">
+                <a href="/projects/midi-di">midi-di</a>
+                <a href="/projects/eqpad">Equation Notepad</a>
+            </div>
+        </span>
+
+        <span id="nav-docs" class="expand down">
+            <a href="/docs" class="expand-base">
+                Documentation
+            </a>
+            <div class="expand-list">
+                <a href="/docs/midi-di">midi-di</a>
+            </div>
+        </span>
+
+        <span id="nav-articles" class="expand down">
+            <a href="/articles" class="expand-base">
+                Articles
+            </a>
+            <div class="expand-list">
+                <a href="/articles/installing-clangpp">Installing Clang++ on Windows (without VS!)</a>
+                <a href="/articles/javascript-puzzles">JavaScript Puzzles</a>
+                <span class="expand side">
+                    <a href="#">Git</a>
+                    <div class="expand-list">
+                        <a href="/articles/git/technical">Technical</a>
+                    </div>
+                </span>
+            </div>
+        </span>
+
+        <span id="nav-resources" class="expand down">
+            <a href="/resources" class="expand-base">
+                Resources
+            </a>
+            <div class="expand-list">
+                <a href=".">No Resources Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-links" class="expand down">
+            <a href="/links" class="expand-base">
+                Links
+            </a>
+            <div class="expand-list">
+                <a href="https://github.com/w2ptr">Github Profile</a>
+            </div>
+        </span>
+    </nav>
+
+    <div class="content">
+        <main class="main">
+            <!--
+    This page is written in markdown for somewhere else and then translated to HTML using https://markdowntohtml.com/.
+    The only thing added is the additional <a href="#..."></a> tags in the <h1> and <h2> tags.
+-->
+
+<h1 id="d-for-android-development-part-1-setup"><a href="#d-for-android-development-part-1-setup">D for Android development - part 1: setup</a></h1>
+<p>(Last edited: 2021-07-19)</p>
+<h2 id="introduction"><a href="#introduction">Introduction</a></h2>
+<p>Android development is usually done using Java and Kotlin. However, if you need to write your own high-performance or
+customized code, if you need to connect to a library written in another language, or if you just prefer to write code
+in another language, Java has the JNI, the Java Native Interface, which allows you to use any language with a native C
+interface. This includes the D language, and this tutorial series will show you how to use D code for Android app
+development.</p>
+<p>Before we get started, I am going to assume you have basic knowledge of Android and either Java/Kotlin, and basic
+knowledge of D. If you want to learn about app development for Android, go to
+<a href="https://developer.android.com/">developer.android.com</a>. You also need to know a bit about working from the command
+line and using Shell/Batch/Powershell.</p>
+<p>Note that this tutorial is mostly written for development on Windows, but the same principles should apply to any other
+platform with the exception of shell commands.</p>
+<h2 id="installing-android-studio"><a href="#installing-android-studio">Installing Android Studio</a></h2>
+<p>If you already have Android Studio installed, you can skip this and go to <a href="#installing-the-ndk">Installing the NDK</a>.</p>
+<p>Go to the <a href="https://developer.android.com/studio/#downloads">Android Studio download page</a> and download and execute the
+version that corresponds to your operating system, after reading the conditions.</p>
+<p>If you want to use the emulator, check the second box. If you have a physical device you want to test on, you can leave
+it unchecked (in which case you may have to install drivers later on: see
+<a href="https://developer.android.com/studio/run/device">this guide</a>).</p>
+<p><img src="install-emulator.png" alt="Emulator configuration image" title="Emulator Configuration"></p>
+<p>If you have settings from another installation, you can choose to import them, but you probably don&#39;t need to.</p>
+<p>Once it&#39;s finished, you can open Android Studio and it will give you some options for installing (for instance, what
+theme you would like and what version of the SDK you want). None of these options matter to our example; we only need
+the NDK (native development toolkit), which has to be installed later anyway.</p>
+<h2 id="installing-the-ndk"><a href="#installing-the-ndk">Installing the NDK</a></h2>
+<p>In the home screen, press <strong>Configure &gt; SDK Manager</strong>, head to <strong>SDK Tools</strong>, check the <strong>NDK (Side by side)</strong> and
+<strong>CMake</strong> components and press <strong>OK</strong>. (If for whatever reason you need a different NDK version than the latest
+version, check the &quot;Show Package Details&quot; box and select a different version.)</p>
+<p><img src="./configure.png" alt="NDK configuration image" title="NDK Configuration"></p>
+<h2 id="setting-up-the-android-project"><a href="#setting-up-the-android-project">Setting up the Android project</a></h2>
+<p>Now we can finally create an actual Android project. Select <strong>Create New Project</strong>, choose the <strong>Native C++</strong> template
+and configure the project as you wish. I&#39;m going to call my project DroiderApp and I prefer to use Java, but Kotlin
+works just fine if you prefer that. (I recommend minimum API version 21??? but it&#39;s a tradeoff between features in the
+API and how many devices you support.)</p>
+<p><img src="./configure-project.png" alt="Project configuration image" title="Project Configuration"></p>
+<p>If you switch the project file tab on the left side to &quot;Project Files&quot;, it will give you an overview of the files in
+your project. In <code>app/src/main</code>, add a directory <code>jniLibs</code> (which is where the <code>.so</code> files will end up, i.e. shared
+library files produced by the D compiler). In this directory, add 4 more directories (one for each target that Android
+can run on):</p>
+<ul>
+<li><code>arm64-v8a</code> (corresponds to triple <code>aarch64-none-linux-android</code>)</li>
+<li><code>armeabi-v7a</code> (corresponds to triple <code>armv7a-none-linux-android</code>)</li>
+<li><code>x86</code> (corresponds to triple <code>i386-none-linux-android</code>)</li>
+<li><code>x86_64</code> (corresponds to triple <code>x86_64-none-linux-android</code>)</li>
+</ul>
+<p>The file overview should now look something like this:</p>
+<p><img src="./file-structure.png" alt="File overview image" title="File Overview"></p>
+<h2 id="setting-up-the-d-runtime-and-standard-libraries"><a href="#setting-up-the-d-runtime-and-standard-libraries">Setting up the D runtime and standard libraries</a></h2>
+<p>Before you can get started with the project, you need to have DUB installed (<a href="https://dub.pm">https://dub.pm</a>) and LDC version 1.21 or
+later (<a href="https://github.com/ldc-developers/ldc/releases">https://github.com/ldc-developers/ldc/releases</a>).</p>
+<p>Your LDC needs to be configured to allow it to cross-compile to the Android targets we need (the four listed above).
+Adam D. Ruppe has created a useful utility package for this on dub (if you want more info, the package is
+<a href="https://code.dlang.org/packages/d_android%3Asetup">on dub</a>). Unfortunately, there is no environment variable you can use, so
+first you have to find the NDK install directory. You can do this by navigating to <code>%LOCALAPPDATA%\Android\Sdk\ndk</code> (on
+Windows) and copying the path to the most recent installation. Now run the following commands from any terminal (virus
+scanners may complain about <code>curl.dll</code> being a threat, which it is not):</p>
+<pre><code class="lang-shell">$ dub fetch d_android:setup
+# (example directory, if you're on windows)
+$ dub run d_android:setup -- "C:<span class="hljs-symbol">\U</span>sers<span class="hljs-symbol">\P</span>C<span class="hljs-symbol">\A</span>ppData<span class="hljs-symbol">\L</span>ocal<span class="hljs-symbol">\A</span>ndroid<span class="hljs-symbol">\S</span>dk<span class="hljs-symbol">\n</span>dk<span class="hljs-symbol">\2</span>2.1.7171670"
+</code></pre>
+<p>The <code>d_android</code> package now contains the appropriate runtime and standard library files, meaning they will be added to
+the project when you compile for Android. If you&#39;ve used <code>d_android:setup</code> before, you don&#39;t have to use it again,
+because that will just duplicate the rules in the ldc2 configuration file generated by the script.</p>
+<h2 id="setting-up-the-d-project"><a href="#setting-up-the-d-project">Setting up the D project</a></h2>
+<p>Now, to create the project, create a terminal in the directory where you want your dub project to be, execute
+<code>dub init</code> in the folder for your D project and add the dependencies <code>arsd-official:jni</code> and <code>d_android</code> (and configure
+any other options as you wish):</p>
+<pre><code class="lang-none"><span class="hljs-comment"># first navigate to the directory where you want the D project</span>
+<span class="hljs-comment"># I chose a directory parallel to the Android Studio project</span>
+$ cd ./d
+$ dub init
+
+Package recipe <span class="hljs-built_in">format</span> (sdl/json) [json]: json
+Name [d]: droider-app
+Description [A minimal D application.]: D+Android example project
+Author name [...]: author name
+License [proprietary]: proprietary
+Copyright <span class="hljs-keyword">string</span> [Copyright ┬⌐ <span class="hljs-number">2021</span>, author name]:
+Add dependency (leave <span class="hljs-literal">empty</span> <span class="hljs-built_in">to</span> skip) []: arsd-official:jni
+Adding dependency arsd-official:jni ~&gt;<span class="hljs-number">10.2</span><span class="hljs-number">.0</span>
+Add dependency (leave <span class="hljs-literal">empty</span> <span class="hljs-built_in">to</span> skip) []: d_android
+Adding dependency d_android ~&gt;<span class="hljs-number">0.1</span><span class="hljs-number">.1</span>
+Add dependency (leave <span class="hljs-literal">empty</span> <span class="hljs-built_in">to</span> skip) []:
+Successfully created <span class="hljs-keyword">an</span> <span class="hljs-literal">empty</span> project <span class="hljs-keyword">in</span> <span class="hljs-string">'C:\[...]\droider-app\d'</span>.
+Package successfully created <span class="hljs-keyword">in</span> .
+</code></pre>
+<p>Your <code>dub.json</code> will also have to be reconfigured a bit, so it compiles to a dynamic library (only the last two options
+are actually added):</p>
+<pre><code class="lang-json">{
+    <span class="hljs-attr">"authors"</span>: [
+        <span class="hljs-string">"author name"</span>
+    ],
+    <span class="hljs-attr">"copyright"</span>: <span class="hljs-string">"Copyright © 2021, author name"</span>,
+    <span class="hljs-attr">"dependencies"</span>: {
+        <span class="hljs-attr">"arsd-official:jni"</span>: <span class="hljs-string">"~&gt;10.2.0"</span>,
+        <span class="hljs-attr">"d_android"</span>: <span class="hljs-string">"~&gt;0.1.1"</span>
+    },
+    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"D+Android example project"</span>,
+    <span class="hljs-attr">"license"</span>: <span class="hljs-string">"proprietary"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"droider-app"</span>,
+
+    <span class="hljs-attr">"targetType"</span>: <span class="hljs-string">"dynamicLibrary"</span>,
+    <span class="hljs-attr">"toolchainRequirements"</span>: {
+        <span class="hljs-attr">"ldc"</span>: <span class="hljs-string">"&gt;=1.21.0"</span>,
+        <span class="hljs-attr">"dub"</span>: <span class="hljs-string">"&gt;=1.18.0"</span>
+    }
+}
+</code></pre>
+<p>In <code>source/app.d</code>, there is now a file that only calls <code>writeln</code>. Replace it by the following code:</p>
+<pre><code class="lang-d"><span class="hljs-keyword">import</span> arsd.jni;
+
+<span class="hljs-comment">///</span>
+<span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> : <span class="hljs-type">JavaClass!</span></span>(<span class="hljs-string">"com.example.droiderapp"</span>, MainActivity) {
+    <span class="hljs-comment">/**
+    Returns a string through JNI (Java Native Interface), to a text component.
+    */</span>
+    <span class="hljs-meta">@Export</span>
+    <span class="hljs-keyword">public</span> wstring stringFromJNI() {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Hello from D!"</span>w;
+    }
+}
+</code></pre>
+<p>You can now compile your project for one of the four target triples (given in
+<a href="#setting-up-the-android-project">the above chapter</a>) by using <code>dub build --compiler=ldc2 --target=&lt;triple&gt;</code> (you will
+likely get a couple of warnings, but those are not problematic). We are going to use this in the final section, where
+the two projects are integrated.</p>
+<h2 id="adding-the-d-project-to-the-android-project"><a href="#adding-the-d-project-to-the-android-project">Adding the D project to the Android project</a></h2>
+<p>The Android Studio project template (&quot;Native C++&quot;) has a <code>CMakeLists.txt</code> (in the folder <code>app/src/main/cpp</code>) that
+describes how the C++ library is compiled into a shared library (<code>.so</code> file). If you don&#39;t intend to use C++ anywhere
+in your project, you can delete the <code>add_library</code>, <code>find_library</code> and <code>target_link_libraries</code> commands that create a
+shared library from <code>native-lib.cpp</code>. Instead, we&#39;re going to add commands for CMake to compile using DUB. Add these
+lines to your <code>CMakeLists.txt</code> file:</p>
+<pre><code class="lang-cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.10</span>.<span class="hljs-number">2</span>)
+<span class="hljs-keyword">project</span>(<span class="hljs-string">"droiderapp"</span>)
+
+<span class="hljs-comment"># select target triple for LDC</span>
+<span class="hljs-keyword">if</span>(<span class="hljs-string">"${CMAKE_ANDROID_ARCH_ABI}"</span> <span class="hljs-keyword">STREQUAL</span> <span class="hljs-string">"armeabi-v7a"</span>)
+    <span class="hljs-keyword">set</span>(LDC_TARGET <span class="hljs-string">"armv7a-none-linux-android"</span>)
+<span class="hljs-keyword">elseif</span>(<span class="hljs-string">"${CMAKE_ANDROID_ARCH_ABI}"</span> <span class="hljs-keyword">STREQUAL</span> <span class="hljs-string">"arm64-v8a"</span>)
+    <span class="hljs-keyword">set</span>(LDC_TARGET <span class="hljs-string">"aarch64-none-linux-android"</span>)
+<span class="hljs-keyword">elseif</span>(<span class="hljs-string">"${CMAKE_ANDROID_ARCH_ABI}"</span> <span class="hljs-keyword">STREQUAL</span> <span class="hljs-string">"x86"</span>)
+    <span class="hljs-keyword">set</span>(LDC_TARGET <span class="hljs-string">"i386-none-linux-android"</span>)
+<span class="hljs-keyword">elseif</span>(<span class="hljs-string">"${CMAKE_ANDROID_ARCH_ABI}"</span> <span class="hljs-keyword">STREQUAL</span> <span class="hljs-string">"x86_64"</span>)
+    <span class="hljs-keyword">set</span>(LDC_TARGET <span class="hljs-string">"x86_64-none-linux-android"</span>)
+<span class="hljs-keyword">else</span>()
+    <span class="hljs-keyword">return</span>() <span class="hljs-comment"># (should not happen)</span>
+<span class="hljs-keyword">endif</span>()
+
+<span class="hljs-comment"># where the files can be found once they are created</span>
+<span class="hljs-keyword">set</span>(D_PROJECT_DIR <span class="hljs-string">"${CMAKE_SOURCE_DIR}/../../../../../d"</span>) <span class="hljs-comment"># path to your D project</span>
+<span class="hljs-keyword">set</span>(D_OUTPUT_FILE <span class="hljs-string">"${D_PROJECT_DIR}/libdroider-app.so"</span>)
+<span class="hljs-keyword">set</span>(JNI_LIB_DIR <span class="hljs-string">"${CMAKE_SOURCE_DIR}/../jniLibs/${CMAKE_ANDROID_ARCH_ABI}"</span>)
+<span class="hljs-keyword">set</span>(JNI_LIB_FILE <span class="hljs-string">"${JNI_LIB_DIR}/libdroider-app.so"</span>)
+
+<span class="hljs-comment"># run the "dub build" command for the current target</span>
+<span class="hljs-comment"># then copy the files to the correct location (jniLibs/&lt;arch&gt; folder)</span>
+<span class="hljs-keyword">add_custom_target</span>(
+        droider-app ALL
+        COMMAND dub build --compiler=ldc2 --arch=<span class="hljs-variable">${LDC_TARGET}</span>
+        COMMAND <span class="hljs-variable">${CMAKE_COMMAND}</span> -E copy <span class="hljs-variable">${D_OUTPUT_FILE}</span> <span class="hljs-variable">${JNI_LIB_FILE}</span>
+        WORKING_DIRECTORY <span class="hljs-variable">${D_PROJECT_DIR}</span>
+        COMMENT <span class="hljs-string">"Building shared library with DUB"</span>
+)
+
+<span class="hljs-comment"># https://stackoverflow.com/a/55973640: in Android Studio, the "ALL" option of</span>
+<span class="hljs-comment"># add_custom_target does not work properly, so we have to add a dummy library :/</span>
+<span class="hljs-comment"># (if anyone knows of a better solution, please let me know)</span>
+<span class="hljs-keyword">add_library</span>(dummy SHARED native-lib.cpp)
+<span class="hljs-keyword">add_dependencies</span>(dummy droider-app)
+</code></pre>
+<p>In <code>MainActivity.java</code>, instead of loading the <code>native-lib</code> C++ library that was there in the template project, add the
+following line to the <code>static</code>:</p>
+<pre><code class="lang-java"><span class="hljs-comment">// or whatever the name of your library is</span>
+<span class="hljs-keyword">System</span>.loadLibrary(<span class="hljs-string">"droider-app"</span>);
+</code></pre>
+<p>This will load the library in <code>jniLibs</code> on startup. For instance, if the target architecture is <code>armeabi-v7a</code> and you
+named your library <code>myapplication</code>, then it looks for the file <code>app/src/main/jniLibs/armeabi-v7a/libmyapplication.so</code>.</p>
+<p>When you run the project and launch the project, it should open the application and show the text "Hello from D!" on
+the screen!</p>
+<h2 id="conclusion"><a href="#conclusion">Conclusion</a></h2>
+<p>This concludes the first part of the tutorial series on using the D language for Android projects. In this part, all we
+did was set up the Android Studio and D projects, but the app doesn&#39;t actually do anything apart from showing a text
+element. In the next part we&#39;re actually going to build a more interesting interface and I&#39;m going to show you several
+features of the <code>arsd.jni</code> library.</p>
+
+
+        </main>
+
+        <aside class="infobar">
+            
+
+        </aside>
+    </div>
+
+    <script lang="javascript">
+        console.log("javascript");
+    </script>
+</body>
+</html>

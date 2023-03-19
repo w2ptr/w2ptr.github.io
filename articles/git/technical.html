@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Articles - Git Guide: Technical
+
+</title>
+    <!-- <link rel="shortcut icon" href="" /> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif', 'Segoe UI Emoji';
+        }
+
+        /*--- generic element styling ---*/
+
+        a {
+            color: #5544FF;
+        }
+        a:hover {
+            color: #6688AA;
+        }
+
+        h1 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 2rem;
+        }
+        h2 {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-weight: 510;
+            font-size: 1.5rem;
+        }
+        h3 {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 510;
+        }
+        h4 {
+            font-size: 1rem;
+        }
+        h1 > a, h2 > a, h3 > a, h4 > a {
+            color: black;
+            text-decoration: none;
+        }
+        h1 > a:hover, h2 > a:hover, h3 > a:hover, h4 > a:hover {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        h1 > a:hover::before, h2 > a:hover::before, h3 > a:hover::before, h4 > a:hover::before {
+            content: '# ';
+        }
+
+        p {
+            padding: 8px 0;
+        }
+
+        strong {
+            font-weight: 510;
+        }
+
+        ul {
+            list-style: none;
+            padding: 6px 0 6px 10px;
+        }
+        ul > li {
+            padding: 2px 0;
+        }
+        ul > li::before {
+            content: '- ';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        td, th {
+            padding: 10px;
+        }
+
+        pre {
+            font-family: inherit;
+            padding: 10px 10px;
+            border-radius: 5px;
+            background-color: #EEEEEE;
+            margin: 20px 0;
+        }
+
+        hr {
+            color: #BBBBBB;
+            margin-bottom: 20px;
+        }
+
+        /*--- actual content ---*/
+
+        .content {
+            padding: 30px 200px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .main {
+            width: 80%;
+            float: left;
+            padding-bottom: 30px;
+        }
+        .infobar {
+            width: 15%;
+            float: right;
+            padding-bottom: 30px;
+        }
+
+        /*--- documentation generation ---*/
+        .doc-member {
+            padding: 5px 0 5px 20px;
+            margin: 30px 0 0 0;
+            border-left: 2px solid #888888;
+        }
+
+        /*--- navigation bar ---*/
+
+        .nav-bar {
+            display: block;
+            background-color: #220022;
+            padding: 0 200px;
+            font-weight: bold;
+        }
+        .nav-bar > * > .expand-base {
+            /* add padding to the expands in the nav bar */
+            padding-left: 15px;
+            padding-right: 65px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .nav-bar a, .expand-base {
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-bar a:hover, .expand-base:hover {
+            color: #88BB88;
+        }
+
+        /*--- expand/dropdown ---*/
+
+        .expand {
+            display: inline-block;
+            position: relative;
+        }
+        .expand-base {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+        .expand-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            border: 3px solid #220022;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .expand:hover.down > .expand-list {
+            display: block;
+        }
+        .expand:hover.side > .expand-list {
+            display: inline-block;
+        }
+        .expand-list > * {
+            display: inline-block;
+            min-width: 140px;
+            padding: 15px;
+            background-color: #220022;
+        }
+
+        /*--- syntax highlighting ---*/
+        code {
+            font-family: 'consolas', 'Courier New', 'Courier', 'monospace';
+            color: #444444;
+        }
+        code.lang-json .hljs-attr {
+            color: #6666BB;
+        }
+        code .hljs-string, code .hlj-number {
+            color: #FF6666;
+        }
+        code .hljs-comment {
+            color: #446622;
+        }
+        code .hljs-keyword {
+            color: #4488CC;
+        }
+        code .hljs-meta {
+            color: #6666BB;
+        }
+        code.lang-none * {
+            color: #444444 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <span id="nav-projects" class="expand down">
+            <a href="/projects" class="expand-base">
+                Projects
+            </a>
+            <div class="expand-list">
+                <a href="/projects/midi-di">midi-di</a>
+                <a href="/projects/eqpad">Equation Notepad</a>
+            </div>
+        </span>
+
+        <span id="nav-docs" class="expand down">
+            <a href="/docs" class="expand-base">
+                Documentation
+            </a>
+            <div class="expand-list">
+                <a href="/docs/midi-di">midi-di</a>
+            </div>
+        </span>
+
+        <span id="nav-articles" class="expand down">
+            <a href="/articles" class="expand-base">
+                Articles
+            </a>
+            <div class="expand-list">
+                <a href="/articles/installing-clangpp">Installing Clang++ on Windows (without VS!)</a>
+                <a href="/articles/javascript-puzzles">JavaScript Puzzles</a>
+                <span class="expand side">
+                    <a href="#">Git</a>
+                    <div class="expand-list">
+                        <a href="/articles/git/technical">Technical</a>
+                    </div>
+                </span>
+            </div>
+        </span>
+
+        <span id="nav-resources" class="expand down">
+            <a href="/resources" class="expand-base">
+                Resources
+            </a>
+            <div class="expand-list">
+                <a href=".">No Resources Yet</a>
+            </div>
+        </span>
+
+        <span id="nav-links" class="expand down">
+            <a href="/links" class="expand-base">
+                Links
+            </a>
+            <div class="expand-list">
+                <a href="https://github.com/w2ptr">Github Profile</a>
+            </div>
+        </span>
+    </nav>
+
+    <div class="content">
+        <main class="main">
+            <h1 id="git-guide-technical"><a href="#git-guide-technical">Git Guide: Technical</a></h1>
+<hr />
+
+<p>Welcome to this (relatively) short explanation of the technical "behind-the-scenes" side of Git. Git is a Source
+Code Management (SCM) tool that is open source and a lot more scalable and than other alternatives, although it has a
+somewhat hard-to-understand interface. It was originally developed as a tool for the Linux kernel because managing that
+code ran out of hand, but then it turned out many people needed better source control, so now it is the most widely
+used SCM in the world.</p>
+
+<p>Besides Git, there are tools like Github, Gitlab and Bitbucket, which are (online) interfaces for hosting Git
+repositories. In addition to hosting them, they often have many extra features like issues/bug lists, pull requests
+(PRs, also called merge requests), reviewing, task management boards and sometimes entire social media platforms. Note
+that (confusingly) some features that you use a lot (like PRs) are Github features and not Git features. With that out
+of the way, I'm going to get started on how Git works!</p>
+
+<p>I will have some "<strong>Try yourself</strong>" sections for where you can try examples on your own Git repo and
+"<strong>Git command</strong>" sections for explaining what a high-level command does (e.g. <code>git commit</code> or
+<code>git reset</code>).</p>
+
+<h2 id="blobs-trees-hashes"><a href="#blobs-trees-hashes">Blobs, Trees and Hashes</a></h2>
+
+<p>Before thinking about commits and different versions of the code, just imagine there is only one version of your
+code (the one you have in the directory of your project). If you have one file with source code, then Git will store
+this source code in a "blob" (not the file, only the <em>contents</em> of the file). It will store a blob in the
+directory <code>.git/objects</code>; to identify a blob, it will compute a SHA-1 hash (which is not actually guaranteed
+to be unique, but the chance is quite high) such as <code>7fd015...</code> etc. Usually it only displays the first 6
+digits.</p>
+
+<p>Of course your repo does not consist of one file with source code, so there are also "trees". A tree is kind of like
+a directory, where each entry has a name such as <code>src</code> or <code>main.ts</code>, which in turn refers to
+another object (a tree or blob). For a tree, Git also calculates a unique(-ish) hash.</p>
+
+<p>Even if you have 10000 different commits of a file that are all only 1 character different, it will store each
+version of this file's content in a separate blob object, meaning you have 10000 copies that are almost identical,
+since each version will have a completely different hash. Fortunately, Git will do some magic compression to not take
+up 10000 times as much disk space, but <em>conceptually</em> you should think of them as different copies.</p>
+
+<p><strong>Try yourself:</strong> go to any git repository and then use the following command in a terminal:</p>
+
+<p><pre><code>$ tree /F .git/objects
+<span class="hljs-comment"># if Bash: ls -R .git/objects</span>
+</code></pre></p>
+
+<p>You might see something like this:</p>
+
+<p><pre><code>├───00
+│       b7741d13a2a8edf0b8aa457be25c1b05bb1de2
+│
+├───04
+│       c5e626e6abe8006e052fa26b645344a89f6c36
+│
+├───07
+│       723145fc8d316195072cd20237428759c2e07e
+│       a58ac8d78fd0adcbf6a80f8a23a1156d795f5a
+etc.
+</code></pre></p>
+
+<p>Now just pick any entry, enter the first 6 digits including the ones in the directory (for instance, 00b774 or
+04c5e6) and run these commands:</p>
+
+<p><pre><code>$ git cat-file -t 04c5e6
+tree
+
+$ git cat-file -p 04c5e6
+100644 blob 3e354001a908625dd3fe5a7cd3fda1b283f2d953    README.md
+040000 tree 90c6615d02ebf8c948a5fdd01b6bb3ca012f4f9f    src
+(etc.)
+</code></pre></p>
+
+<p>Some of them will give you trees, others will give blobs, others will give commits. Doing <code>git cat-file
+-p</code> will show you the data that is in a Git object, while using <code>-t</code> shows if it is a blob, tree or
+commit.</p>
+
+<h2 id="commits"><a href="#commits">Commits</a></h2>
+
+<p>In my opinion, "commit" is not a very good name; "snapshot" probably describes better how it works. Each commit is a
+complete snapshot of everything in your project.</p>
+
+<p>Implementation-wise, a commit is really just the hash of a single tree object, namely the tree object that describes
+the corresponding version of your project directory. It also has a bit of extra data, such as the commit message and
+author of the commit.</p>
+
+<p>Finally, a commit also has a parent (except if it's the first commit ever, then it has no parent). This is the hash
+of the commit object that came before this commit.</p>
+
+<p>In the .git folder you will also find a file called "HEAD". If you open it, it will show you a reference to some
+branch or to a commit (if it's a commit, you might see something like "Detached HEAD" in a Git client). HEAD refers to
+the commit that you are currently on.</p>
+
+<img src="/images/git/technical/github-desktop-history.png" />
+
+<p><strong>Git command log:</strong> if you use <code>git log --oneline</code> or you view the history of commits in
+Github Desktop it essentially does a simple tree walk algorithm:</p>
+
+<p><pre><code>currentCommit = HEAD
+print(currentCommit.hash, currentCommit.message)
+while (currentCommit.parent exists) {
+    currentCommit = currentCommit.parent
+    print(currentCommit.hash, currentCommit.message)
+}
+</code></pre></p>
+
+<h2 id="tags-and-branches"><a href="#tags-and-branches">Tags and Branches</a></h2>
+
+<p>A tag is essentially just a nice name for the hash of an object (usually a commit). A branch is the same thing.
+The only difference is that when you use commands like <code>git commit</code> or <code>git reset</code>, git will
+automatically update branches for you, while you have to update tags yourself.</p>
+
+<p>Git stores tags in <code>.git/refs/tags</code>, while it stores branches in <code>.git/refs/heads</code>.</p>
+
+<p><strong>Try yourself:</strong> run the following in any git repo:</p>
+
+<p><pre><code><span class="hljs-comment"># Create branch or tag called "example":</span>
+$ git branch example       # or git tag example
+
+$ cat .git/heads/example   # or .git/tags/example
+<span class="hljs-comment"># This is the hash of a commit:</span>
+b4aa4d1fb12f770e90d5fc27fea64e21e364368d
+
+$ git cat-file -p b4aa4d   # first 6 digits
+tree 927c472a22118dcb365ace4232c0137d5484e833
+parent e2b52132f4f122bf054bddb314b502b04bfc3806
+author (SOME INFO)
+committer (SOME INFO)
+
+Message of last commit you made
+</code></pre></p>
+
+<p>So you can see that a branch/tag is really just an alias for the hash of a commit object.</p>
+
+<p><strong>Git command branch/tag:</strong> when you use <code>git branch branch-name</code>, it essentially does the
+following:</p>
+
+<p><pre><code>hash = HEAD.hash
+createFile(".git/refs/heads/(branch-name)", content=hash)
+HEAD = "refs/heads/(branch-name)"
+</code></pre></p>
+
+<p>The <code>git tag tag-name</code> command does the exact same thing, except it does not do the last line. You can use
+<code>git branch --list</code> or <code>git tag --list</code> to see the branches/tags you created.</p>
+
+<img src="/images/git/technical/github-desktop-commit.png" />
+
+<p><strong>Git command commit:</strong> when you use <code>git commit</code>, it essentially inserts a node at the end
+of the commit tree and sets the parent of this new commit to the last commit:</p>
+
+<p><pre><code>commit = new Commit()
+commit.tree = currentTree.hash
+commit.parent = HEAD.hash
+storeGitObject(commit)
+if (HEAD refers to some branch B) {   <span class="hljs-comment"># i.e. not in detached HEAD state</span>   
+    make B refer to commit.hash
+    make HEAD refer to B
+} else {
+    make HEAD refer to commit.hash
+}
+</code></pre></p>
+
+<img src="/images/git/technical/github-desktop-switch-branch.png" />
+
+<p><strong>Git command checkout:</strong> when you use <code>git checkout branch-name</code> or <code>git switch
+branch-name</code> or you switch to a different branch in Github Desktop, all it does is <code>HEAD =
+"refs/heads/branch-name"</code> (and in case you had some changes, it will move these over to the new branch).</p>
+
+<p>Additionally, you can do <code>git checkout aa1e3a</code> (or with any other hash) to make the HEAD refer to that
+commit. Git or a Git client will then tell you that you are in "detached HEAD state", meaning that your HEAD does not
+refer to a branch, but to a "loose" commit.</p>
+
+<p><strong>Git command reset:</strong> you can instead use <code>git reset</code> to move back to another commit (I
+don't think there is an equivalent for this in Github Desktop). Instead of moving HEAD to another commit, this moves
+the <em>branch</em> that you are on to another commit (assuming your HEAD is not detached). For instance, you can use
+<code>git reset --hard HEAD~2</code> to move the branch you are on back to the grandparent (~2) of the HEAD. (Using
+--soft instead of --hard will keep the changes of the commits that you passed in your project folder, while --hard
+deletes them entirely).</p>
+
+<h2 id="rewriting-history"><a href="#rewriting-history">Rewriting Histry</a></h2>
+
+<p>Now finally, there are some cool things that you can do with Git which will surely be useful at some point. Note
+that when you rewrite history, there will be a strong difference between what you have in your local clone of the repo
+and the remote repository (assuming you are working with a remote). This means that if other people are working on the
+same branch as you, it will mess up their history. Therefore I <em>strongly</em> suggest you never force-push to the
+main branch unless you are working on your own.</p>
+
+<img src="/images/git/technical/github-desktop-amend-commit.png" />
+
+<p><strong>Git command commit --amend:</strong> you can use <code>git commit --amend</code> to not create a new commit, but to modify
+the current (HEAD) commit instead. When you have added your changes with <code>git add</code> or a client like Github
+Desktop, you can use this flag to rewrite history. It essentially does the following:</p>
+
+<p><pre><code>commit = new Commit()
+commit.tree = currentTree.hash
+commit.parent = HEAD.parent.hash      <span class="hljs-comment"># NOTE only difference: HEAD.parent</span> 
+storeGitObject(commit)
+if (HEAD refers to some branch B) {   <span class="hljs-comment"># i.e. not in detached HEAD state</span>   
+    make B refer to commit.hash
+    make HEAD refer to B
+} else {
+    make HEAD refer to commit.hash
+}
+</code></pre></p>
+
+<img src="/images/git/technical/github-desktop-rebase.png" />
+
+<p><strong>Git command rebase:</strong> imagine you are working on two different branches, <code>main</code> and
+<code>feature1</code>. The Git tree might look likes this, where each node is a commit:</p>
+
+<img src="/images/git/technical/rebase-before.png" />
+
+<p>Assuming your HEAD refers to feature1, if you use <code>git rebase main</code> (or use Github Desktop for this), the
+graph will change as follows:</p>
+
+<img src="/images/git/technical/rebase-step1.png" />
+
+<img src="/images/git/technical/rebase-step2.png" />
+
+<p>Now that you have rebased <code>feature1</code> onto <code>main</code>, it is really easy to make a pull request for
+the <code>feature1</code>branch; after all, git can simply do the following:</p>
+
+<p><pre><code>make main refer to feature1.hash
+</code></pre></p>
+
+<p><strong>Git command rebase -i:</strong> TODO</p>
+
+<h2 id="remotes"><a href="#remotes">Remotes</a></h2>
+
+<p>Now for a completely different topic: ...</p>
+
+
+        </main>
+
+        <aside class="infobar">
+            <p>
+    <a id="dst-git-website" href="#src-git-website">[0]</a>
+    <a href="https://git-scm.com/">Git website</a>
+</p>
+
+<p>
+    <a id="dst-git-commands" href="#src-git-commands">[1]</a>
+    <a href="https://git-scm.com/docs/git#_git_commands">List of Git commands</a>
+</p>
+
+
+        </aside>
+    </div>
+
+    <script lang="javascript">
+        console.log("javascript");
+    </script>
+</body>
+</html>
