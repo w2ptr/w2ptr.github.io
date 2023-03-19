@@ -285,6 +285,17 @@ of the way, I'm going to get started on how Git works!</p>
 "<strong>Git command</strong>" sections for explaining what a high-level command does (e.g. <code>git commit</code> or
 <code>git reset</code>).</p>
 
+<p>
+    Contents:
+    <ul>
+        <li><a href="#blobs-trees-hashes">Blobs, Trees and Hashes</a></li>
+        <li><a href="#commits">Commits</a></li>
+        <li><a href="#tags-and-branches">Tags and Branches</a></li>
+        <li><a href="#rewriting-history">Rewriting History</a></li>
+        <li><a href="#remotes">Remotes</a></li>
+    </ul>
+</p>
+
 <h2 id="blobs-trees-hashes"><a href="#blobs-trees-hashes">Blobs, Trees and Hashes</a></h2>
 
 <p>Before thinking about commits and different versions of the code, just imagine there is only one version of your
@@ -379,13 +390,13 @@ automatically update branches for you, while you have to update tags yourself.</
 <p><strong>Try yourself:</strong> run the following in any git repo:</p>
 
 <p><pre><code><span class="hljs-comment"># Create branch or tag called "example":</span>
-$ git branch example       # or git tag example
+$ git branch example       <span class="hljs-comment"># or git tag example</span>
 
-$ cat .git/heads/example   # or .git/tags/example
+$ cat .git/heads/example   <span class="hljs-comment"># or .git/tags/example</span>
 <span class="hljs-comment"># This is the hash of a commit:</span>
 b4aa4d1fb12f770e90d5fc27fea64e21e364368d
 
-$ git cat-file -p b4aa4d   # first 6 digits
+$ git cat-file -p b4aa4d   <span class="hljs-comment"># first 6 digits</span>
 tree 927c472a22118dcb365ace4232c0137d5484e833
 parent e2b52132f4f122bf054bddb314b502b04bfc3806
 author (SOME INFO)
@@ -441,13 +452,14 @@ the <em>branch</em> that you are on to another commit (assuming your HEAD is not
 --soft instead of --hard will keep the changes of the commits that you passed in your project folder, while --hard
 deletes them entirely).</p>
 
-<h2 id="rewriting-history"><a href="#rewriting-history">Rewriting Histry</a></h2>
+<h2 id="rewriting-history"><a href="#rewriting-history">Rewriting History</a></h2>
 
 <p>Now finally, there are some cool things that you can do with Git which will surely be useful at some point. Note
 that when you rewrite history, there will be a strong difference between what you have in your local clone of the repo
-and the remote repository (assuming you are working with a remote). This means that if other people are working on the
-same branch as you, it will mess up their history. Therefore I <em>strongly</em> suggest you never force-push to the
-main branch unless you are working on your own.</p>
+and the remote repository (assuming you are working with a remote), and you have to run <code>git push -f</code>
+instead of just <code>git push</code>. This means that if other people are working on the same branch as you, it will
+mess up their history. Therefore I <em>strongly</em> suggest you never force-push to the main branch unless you are
+working on your own.</p>
 
 <img src="/images/git/technical/github-desktop-amend-commit.png" />
 
@@ -475,23 +487,71 @@ if (HEAD refers to some branch B) {   <span class="hljs-comment"># i.e. not in d
 <img src="/images/git/technical/rebase-before.png" />
 
 <p>Assuming your HEAD refers to feature1, if you use <code>git rebase main</code> (or use Github Desktop for this), the
-graph will change as follows:</p>
+graph will change as follows (it finds the least common ancestor, i.e. the latest commit that both branches originate
+from):</p>
 
-<img src="/images/git/technical/rebase-step1.png" />
+<img src="/images/git/technical/rebase-step1.png" /><br />
 
 <img src="/images/git/technical/rebase-step2.png" />
 
 <p>Now that you have rebased <code>feature1</code> onto <code>main</code>, it is really easy to make a pull request for
 the <code>feature1</code>branch; after all, git can simply do the following:</p>
 
-<p><pre><code>make main refer to feature1.hash
+<p><pre><code>main = feature1
 </code></pre></p>
 
-<p><strong>Git command rebase -i:</strong> TODO</p>
+<p>So that after merging, the history looks like this:</p>
+
+<img src="/images/git/technical/rebase-after.png" />
+
+<p><strong>Git command rebase -i:</strong> There is also something called "interactive rebase", which also rewrites
+history, but its name is misleading in the sense that it does not <em>necessarily</em> change the base of the current
+branch. You can also just see it as a general history rewriting tool. When you do something like <code>git rebase -i
+HEAD~4</code>, it will prompt you what you would like to do with the last 4 commits (e.g. "squash", "drop", "reword",
+"edit" and others <a id="src-interactive-rebase" href="#dst-interactive-rebase">[2]</a>). When you close the text
+editor, it will then go over each commit that is changed and prompt you again. If you are finished with editing, you
+can then use <code>git rebase --continue</code> to continue, or you can go to Github Desktop and click on the Continue
+button. You can always do <code>git rebase --abort</code> if it turns out you messed something up.</p>
+
+<p>Finally, there are other history rewriting operations you can do, like <code>git cherry-pick</code>, but you should
+refer to the Git documentation for this <a id="src-git-commands" href="#dst-git-commands">[1]</a>.</p>
 
 <h2 id="remotes"><a href="#remotes">Remotes</a></h2>
 
-<p>Now for a completely different topic: ...</p>
+<p>Now finally, for a completely different topic: if you work with Github, the repository is hosted somewhere else,
+because often you want more than one person working on the same repository. When you have another repository somewhere
+else, it is called a remote. Usually this remote is called "origin" and it just points to the URL of the repo hosted on
+Github/Gitlab/etc.</p>
+
+<p>Another feature of branches is that they can "track" a branch on the remote. So for instance, <code>main</code> will
+<em>probably</em> track <code>origin/main</code>.</p>
+
+<img src="/images/git/technical/github-desktop-pull.png" />
+
+<p><strong>Git command pull:</strong> when you use <code>git pull origin</code>, it then does as follows:</p>
+
+<p><pre><code><span class="hljs-comment"># git fetch simply gets all git objects from the remote that didn't exist locally yet</span>
+git fetch   
+
+ancestor = leastCommonAncestor(main, origin/main)
+if (ancestor == main) {  <span class="hljs-comment"># if origin/main is directly "ahead" by >= 0 commits</span>
+    main = origin/main
+} else {                 <span class="hljs-comment"># if branches diverge</span>
+    error("main and origin/main diverge by X and Y commits respectively")
+}
+</code></pre></p>
+
+<p>Thus it will "fast-forward" the local branch to the remote branch, but only if origin/main is some child of main
+(i.e. main has strictly <em>fewer</em> commits than the branch it has tracking).</p>
+
+<img src="/images/git/technical/github-desktop-push.png" />
+
+<p><strong>Git command push:</strong> in contrast, <code>git push origin</code> kind of does the reverse: first it will
+transfer git objects (blobs, trees, commits) that do not already exist on the remote; after that, if the remote branch
+main is some child of origin/main (transitively, i.e. main has strictly <em>more</em> commits than the branch it is
+tracking), it will set origin/main to point to the same commit as your local branch main.</p>
+
+<p>See here for commands for changing properties of the remote <a id="src-remote" href="#dst-remote">[3]</a>.</p>
 
 
         </main>
@@ -505,6 +565,18 @@ the <code>feature1</code>branch; after all, git can simply do the following:</p>
 <p>
     <a id="dst-git-commands" href="#src-git-commands">[1]</a>
     <a href="https://git-scm.com/docs/git#_git_commands">List of Git commands</a>
+</p>
+
+<p>
+    <a id="dst-interactive-rebase" href="#src-interactive-rebase">[2]</a>
+    <a href="https://git-scm.com/docs/git-rebase#_interactive_mode">Interactive Rebase</a>
+</p>
+
+<p>
+    <a id="dst-remote" href="#src-remote">[3]</a>
+    <a href="https://git-scm.com/docs/git-remote">Git remote</a>,
+    <a href="https://git-scm.com/docs/git-pull">Git pull</a>,
+    <a href="https://git-scm.com/docs/git-push">Git push</a>
 </p>
 
 
