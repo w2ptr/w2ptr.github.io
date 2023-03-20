@@ -293,6 +293,7 @@ of the way, I'm going to get started on how Git works!</p>
         <li><a href="#tags-and-branches">Tags and Branches</a></li>
         <li><a href="#rewriting-history">Rewriting History</a></li>
         <li><a href="#remotes">Remotes</a></li>
+        <li><a href="#example-workflow">An Example Workflow</a></li>
     </ul>
 </p>
 
@@ -552,6 +553,38 @@ main is some child of origin/main (transitively, i.e. main has strictly <em>more
 tracking), it will set origin/main to point to the same commit as your local branch main.</p>
 
 <p>See here for commands for changing properties of the remote <a id="src-remote" href="#dst-remote">[3]</a>.</p>
+
+<h2 id="example-workflow"><a href="#example-workflow">Example Workflow</a></h2>
+
+<p>This is one example of how you can collaborate using Git. Typically there will be one <code>main</code> branch and
+every collaborator can branch off of that one. That means to start a new feature, you do as follows:</p>
+
+<p><ol>
+    <li>Create new branch and checkout to it: <code>git checkout -b new-feature</code></li>
+    <li>Write the code for a commit</li>
+    <li>Use <code>git add &lt;filenames&gt;</code> to select changes for your commit and then use <code>git commit -m
+    "message"</code></li>
+    <li>Use <code>git push</code> to push your changes to the remote</li>
+    <li>Repeat from 2. until done</li>
+</ol></p>
+
+<p>Then regularly, you should do the following (because if you do not, you will diverge from the main branch and get a
+lot of merge conflicts when you issue a PR):</p>
+
+<p><ol>
+    <li><code>git checkout main</code> (if you have uncommitted changes, you can use <code>git stash push</code>)</li>
+    <li><code>git pull</code> to get the newest version of <code>main</code></li>
+    <li><code>git checkout new-feature</code></li>
+    <li><code>git rebase main</code> to base HEAD (i.e. new-feature) off of <code>main</code>; when it shows merge
+    conflicts, you should fix those, use <code>git add name-of-file.ext</code> to mark that you are done and finally
+    use <code>git rebase --continue</code> to keep going</li>
+    <li>When rebasing is finished and you are satisfied with the rebase (i.e. your code still works as intended), your
+    local branch is now up-to-date with the latest version of <code>main</code>, but the remote branch is not; if
+    nobody else was working on the same branch as you, you can use <code>git push -f</code> to update the remote as
+    well</li>
+</ol></p>
+
+<p>Then when you are done, you can create a PR and you should have no merge conflicts.</p>
 
 
         </main>
